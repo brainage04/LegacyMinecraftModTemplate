@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.commands.CommandManager
+import com.example.commands.manager.CommandManager
 import com.example.config.manager.ConfigManager
 import com.example.config.ExampleModConfig
 import com.example.keybinds.ConfigKeybind
