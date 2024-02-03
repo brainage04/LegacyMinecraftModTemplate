@@ -1,16 +1,16 @@
 [
   {
     "modid": "${modid}",
-    "name": "Example Mod",
-    "description": "A mod that is used as an example.",
+    "name": "MyForgeTemplate",
+    "description": "A Forge 1.8.9 modding template packaged with MoulConfig.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/romangraef/Forge1.8.9Template/",
-    "updateUrl": "",
+    "url": "https://github.com/brainage04/MyForgeTemplate/",
+    "updateUrl": "https://github.com/brainage04/MyForgeTemplate/latest/releases/",
     "authorList": [
       "You"
     ],
-    "credits": "",
+    "credits": "brainage04, hannibal002, nea89o, Moulberry",
     "logoFile": "",
     "screenshots": [],
     "dependencies": []
