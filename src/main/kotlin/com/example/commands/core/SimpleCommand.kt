@@ -1,4 +1,4 @@
-package com.example.commands
+package com.example.commands.core
 
 import com.example.errors.CommandError
 import net.minecraft.command.CommandBase
