@@ -1,6 +1,8 @@
-package com.example.config.categories;
+package com.example.config;
 
 import com.example.ExampleMod;
+import com.example.config.categories.FirstCategory;
+import com.example.config.categories.SecondCategory;
 import com.google.gson.annotations.Expose;
 import io.github.moulberry.moulconfig.Config;
 import io.github.moulberry.moulconfig.annotations.Category;

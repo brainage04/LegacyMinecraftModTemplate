@@ -1,6 +1,6 @@
-package com.example.config
+package com.example.config.manager
 
-import com.example.config.categories.ExampleModConfig
+import com.example.config.ExampleModConfig
 import com.example.errors.ConfigError
 import com.google.gson.GsonBuilder
 import com.google.gson.TypeAdapter
