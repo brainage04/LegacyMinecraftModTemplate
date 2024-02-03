@@ -9,7 +9,7 @@ jobs:
   cleanup:
     name: "Initialize Repo"
     runs-on: ubuntu-latest
-    if: github.event.repository.name != 'Forge1.8.9Template'
+    if: github.event.repository.name != 'MyForgeTemplate'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
