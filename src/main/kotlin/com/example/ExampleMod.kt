@@ -3,7 +3,7 @@ package com.example
 import com.example.commands.manager.CommandManager
 import com.example.config.manager.ConfigManager
 import com.example.config.ExampleModConfig
-import com.example.keybinds.ConfigKeybind
+import com.example.keybinds.ConfigKeyBind
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.ClientRegistry
@@ -59,6 +59,6 @@ class ExampleMod {
         val config: ExampleModConfig
             get() = configManager.config ?: error("config is null")
 
-        val configKeyBind = ConfigKeybind()
+        val configKeyBind = ConfigKeyBind()
     }
 }
