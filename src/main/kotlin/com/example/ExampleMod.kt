@@ -1,9 +1,8 @@
 package com.example
 
 import com.example.commands.CommandManager
-import com.example.config.ConfigManager
-import com.example.config.categories.ExampleModConfig
-import com.example.features.ChatFeatures
+import com.example.config.manager.ConfigManager
+import com.example.config.ExampleModConfig
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
@@ -22,8 +21,6 @@ class ExampleMod {
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         CommandManager()
-
-        MinecraftForge.EVENT_BUS.register(ChatFeatures())
     }
 
     companion object {
