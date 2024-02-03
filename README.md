@@ -4,3 +4,6 @@ created by hannibal002 (packaged with MoulConfig), which is based on a [template
 created by nea89o.
 
 Please visit these repositories (specifically [nea89o's](https://github.com/romangraef/Forge1.8.9Template)) for setup instructions.
+
+# Todo
+test if it changes anything in the mcmod.info file (it should)
