@@ -21,7 +21,7 @@ echo "Setting package dir to $package_dir"
 echo "Setting mod id to $modid"
 (
   set -x
-  find "$base"/src/main -type f -exec sed -i s/examplemod/"$modid"/g\;s/com.example/"$package_name"/g {} +
+  find "$base"/src/main -type f -exec sed -i s/examplemod/"$modid"/g\;s/ExampleMod/"$project_name"/g\;s/com.example/"$package_name"/g {} +
   sed -i s/com.example/"$package_name"/g\;s/examplemod/"$modid"/g "$base"/gradle.properties
   sed -i s/examplemod/"$project_name"/g "$base"/settings.gradle.kts
   mkdir -p "$base"/src/main/java/"$package_dir"

@@ -49,7 +49,7 @@ class ExampleMod {
     companion object {
         lateinit var configManager: ConfigManager
         const val MOD_ID = "examplemod"
-        const val MOD_NAME = "Example Mod"
+        const val MOD_NAME = "ExampleMod"
         val LOGGER = LogManager.getLogger(MOD_ID)
 
         @JvmStatic
