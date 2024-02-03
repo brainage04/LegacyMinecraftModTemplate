@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import io.github.moulberry.moulconfig.annotations.ConfigEditorBoolean;
 import io.github.moulberry.moulconfig.annotations.ConfigOption;
 
-public class FirstCategory {
+public class MainCategory {
 
     @Expose
     @ConfigOption(name = "First Toggle", desc = "Enable this toggle to activate a feature.")

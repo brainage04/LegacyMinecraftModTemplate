@@ -1,8 +1,7 @@
 package com.example.config;
 
 import com.example.ExampleMod;
-import com.example.config.categories.FirstCategory;
-import com.example.config.categories.SecondCategory;
+import com.example.config.categories.MainCategory;
 import com.google.gson.annotations.Expose;
 import io.github.moulberry.moulconfig.Config;
 import io.github.moulberry.moulconfig.annotations.Category;
@@ -11,7 +10,7 @@ public class ExampleModConfig extends Config {
 
     @Override
     public String getTitle() {
-        return "Example Mod " + ExampleMod.getVersion() + " by §channibal2§r, config by §5Moulberry §rand §5nea89";
+        return ExampleMod.MOD_ID + " " + ExampleMod.getVersion() + " by §cbrainage04§r, config by §5Moulberry §rand §5nea89";
     }
 
     @Override
@@ -20,10 +19,6 @@ public class ExampleModConfig extends Config {
     }
 
     @Expose
-    @Category(name = "First Category", desc = "This is the first category.")
-    public FirstCategory firstCategory = new FirstCategory();
-
-    @Expose
-    @Category(name = "Second Category", desc = "This is another category.")
-    public SecondCategory secondCategory = new SecondCategory();
+    @Category(name = "Main Category", desc = "This is the main category.")
+    public MainCategory mainCategory = new MainCategory();
 }
