@@ -23,9 +23,9 @@ echo "Setting mod id to $modid"
 echo "Setting owner to $owner"
 (
   set -x
-  find "$base"/src/main -type f -exec sed -i s/examplemod/"$modid"/g\;s/ExampleMod/"$project_name"/g\;s/com.example/"$package_name"/g {} +
+  find "$base"/src/main -type f -exec sed -i s/com.example/"$package_name"/g\; s/examplemod/"$modid"/g\; s/ExampleMod/"$project_name"/g {} +
   sed -i s/com.example/"$package_name"/g\; s/examplemod/"$modid"/g\; s/ExampleMod/"$project_name"/g\; s/brainage04/"$owner"/g "$base"/gradle.properties
-  sed -i s/examplemod/"$project_name"/g "$base"/settings.gradle.kts
+  sed -i s/examplemod/"$modid"/g "$base"/settings.gradle.kts
   mkdir -p "$base"/src/main/java/"$package_dir"
   mkdir -p "$base"/src/main/kotlin/"$package_dir"
   mv "$base"/src/main/java/com/example/* "$base"/src/main/java/"$package_dir"
