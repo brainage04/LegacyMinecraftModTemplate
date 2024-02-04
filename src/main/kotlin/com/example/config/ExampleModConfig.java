@@ -10,7 +10,7 @@ public class ExampleModConfig extends Config {
 
     @Override
     public String getTitle() {
-        return ExampleMod.MOD_ID + " " + ExampleMod.getVersion() + " by §cbrainage04§r, config by §5Moulberry §rand §5nea89";
+        return ExampleMod.MOD_NAME + " " + ExampleMod.getVersion() + " by §cbrainage04§r, config by §5Moulberry §rand §5nea89";
     }
 
     @Override
