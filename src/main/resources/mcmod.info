@@ -5,10 +5,10 @@
     "description": "A Forge 1.8.9 modding template packaged with MoulConfig.",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/brainage04/MyForgeTemplate/",
-    "updateUrl": "https://github.com/brainage04/MyForgeTemplate/latest/releases/",
+    "url": "https://github.com/${username}/${modname}/",
+    "updateUrl": "https://github.com/${username}/${modname}/latest/releases/",
     "authorList": [
-      "brainage04"
+      "${username}"
     ],
     "credits": "brainage04, hannibal002, nea89o, Moulberry",
     "logoFile": "",
