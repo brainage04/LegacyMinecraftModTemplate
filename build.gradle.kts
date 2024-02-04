@@ -12,10 +12,12 @@ plugins {
 //Constants:
 
 val baseGroup: String by project
-val mcVersion: String by project
-val version: String by project
 val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
+val modname: String by project
+val version: String by project
+val mcVersion: String by project
+val username: String by project
 
 // Toolchains:
 java {
@@ -139,10 +141,12 @@ tasks.withType(Jar::class) {
 }
 
 tasks.processResources {
+    inputs.property("mixinGroup", mixinGroup)
+    inputs.property("modid", modid)
+    inputs.property("modname", modname)
     inputs.property("version", project.version)
     inputs.property("mcversion", mcVersion)
-    inputs.property("modid", modid)
-    inputs.property("mixinGroup", mixinGroup)
+    inputs.property("username", username)
 
     filesMatching(listOf("mcmod.info", "mixins.$modid.json")) {
         expand(inputs.properties)
