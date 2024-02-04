@@ -74,10 +74,10 @@ class ConfigManager {
         processor = MoulConfigProcessor(config)
         BuiltinMoulConfigGuis.addProcessors(processor)
 //        UpdateManager.injectConfigProcessor(processor)
-        ConfigProcessorDriver.processConfig(
-            config.javaClass,
-            config,
-            processor
+        val configProcessorDriver = ConfigProcessorDriver(processor)
+
+        configProcessorDriver.processConfig(
+            config
         )
 
         Runtime.getRuntime().addShutdownHook(Thread {
