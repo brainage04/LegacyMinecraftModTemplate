@@ -8,31 +8,35 @@ permissions:
 jobs:
   cleanup:
     name: "Initialize Repo"
-    runs-on: ubuntu-latest
-    if: github.event.repository.name != 'MyForgeTemplate'
+    runs-on: ubuntu-24.04
+    if: github.event.repository.name != 'LegacyMinecraftModTemplate'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Initialize Repo
+        uses: actions/checkout@v5
+      - name: Initialize repository
+        shell: bash
         run: |
+          set -euo pipefail
+          if [ ! -f make-my-own.sh ]; then
+            echo "Repository is already initialized."
+            exit 0
+          fi
+
+          repository_owner="${GITHUB_REPOSITORY%%/*}"
+          repository_name="${GITHUB_REPOSITORY#*/}"
+          owner="${repository_owner,,}"
+          package_owner=$(printf '%s' "$owner" | tr -cd 'a-z0-9_')
+          modid=$(printf '%s' "${repository_name,,}" | tr -cd 'a-z0-9_')
+          project_name=$(printf '%s' "$repository_name" | tr -cd 'A-Za-z0-9_')
+          if [[ "$package_owner" =~ ^[0-9] ]]; then package_owner="user${package_owner}"; fi
+          if [[ "$modid" =~ ^[0-9] ]]; then modid="mod${modid}"; fi
+          if [[ "$project_name" =~ ^[0-9] ]]; then project_name="Mod${project_name}"; fi
+          package_name="com.github.${package_owner}.${modid}"
+
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          owner=$(echo $GITHUB_REPOSITORY | cut -d/ -f1 | tr '[:upper:]' '[:lower:]')
-          name=$(echo $GITHUB_REPOSITORY | cut -d/ -f2 | tr '[:upper:]' '[:lower:]' | tr -d "-" | tr -d ".")
-          pack_name="com.github.${owner,,}.${name,,}"
-          proj_name="$(echo $GITHUB_REPOSITORY | cut -d/ -f2)"
-          modid="$(echo $name | sed 's/[^a-z]//g')"
-          ./make-my-own.sh "$pack_name" "$proj_name" "$modid" "$owner"
-          git add .
-          git commit -F- <<EOF
-          Initialize template repository proper
-          
-          Set package name to $pack_name
-          Set project name to $proj_name
-          Set modid to $modid
-          EOF
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          branch: ${{ github.ref }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git config --local user.name "GitHub Actions"
+          ./make-my-own.sh "$package_name" "$project_name" "$modid" "$repository_owner"
+          git add --all
+          git commit -m "Initialize template repository" \
+            -m "Set package name to ${package_name}, project name to ${project_name}, and mod id to ${modid}."
+          git push origin "HEAD:${GITHUB_REF_NAME}"
