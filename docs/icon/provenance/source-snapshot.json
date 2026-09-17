@@ -1,0 +1,9 @@
+{
+  "approved_source": "blender-m",
+  "sha256": {
+    "legacy-hub-1.blend": "146a2d29537fb1a8756b3880266f1df2e6bfd2894e29ed5dfa4a02d92e338142",
+    "legacy-hub-1.png": "fa7e41a04d7748ee316c1efd4a109f5c159a0fb984c3124b82bb0ad25cb627da"
+  },
+  "copied_blends": "source/",
+  "authoring": "New scenes authored from immutable packed snapshots using saved local Python scripts; no git commits per local-only rule."
+}

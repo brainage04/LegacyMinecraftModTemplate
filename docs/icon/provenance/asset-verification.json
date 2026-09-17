@@ -1,0 +1,167 @@
+{
+  "resources": {
+    "cgroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/render-blender.service",
+    "cpu_max": "300000 100000",
+    "cpu_weight": 20,
+    "affinity": [
+      0,
+      2,
+      4
+    ]
+  },
+  "renders": [
+    {
+      "image": "legacy-hub-down-left-1.png",
+      "packed_scene": "legacy-hub-down-left-1.blend",
+      "source_jar": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+      "textures": [
+        {
+          "image": "anvil_base.png",
+          "jar_member": "assets/minecraft/textures/blocks/anvil_base.png",
+          "sha256": "4cabcffe73c588c2054d078a2610884cda4ee545fe55c68ca9323b0d78963ba6",
+          "packed_bytes": 379,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "anvil_top_damaged_0.png",
+          "jar_member": "assets/minecraft/textures/blocks/anvil_top_damaged_0.png",
+          "sha256": "8c5df6f382350ee8d8cee7b7b8c21960236c8f21e08308b3447eb591ec4cf055",
+          "packed_bytes": 310,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "brewing_stand.png",
+          "jar_member": "assets/minecraft/textures/blocks/brewing_stand.png",
+          "sha256": "dfe53a700ad60ca67ed2f380acdab528705bb663f3235f71171db2f364bbc253",
+          "packed_bytes": 321,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "brewing_stand_base.png",
+          "jar_member": "assets/minecraft/textures/blocks/brewing_stand_base.png",
+          "sha256": "23bda4eda50e83d73df2c1a748d7ed1f62fb70d4cfd5fc882b0331efb4673b21",
+          "packed_bytes": 513,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "crafting_table_front.png",
+          "jar_member": "assets/minecraft/textures/blocks/crafting_table_front.png",
+          "sha256": "2d26be595d1984df716ecf84e6a70cdbf219aefdf7494414bb1e2866954b43db",
+          "packed_bytes": 407,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "crafting_table_side.png",
+          "jar_member": "assets/minecraft/textures/blocks/crafting_table_side.png",
+          "sha256": "aa1d8bfee4b59059597dd19dea73d3efa65617799403742c8295483d7f1e5f9e",
+          "packed_bytes": 386,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "crafting_table_top.png",
+          "jar_member": "assets/minecraft/textures/blocks/crafting_table_top.png",
+          "sha256": "32208808c69c258cb99bd40e42a64c2a796ae3f0506fc02368d808379578283d",
+          "packed_bytes": 550,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "enchanting_table_book.png",
+          "jar_member": "assets/minecraft/textures/entity/enchanting_table_book.png",
+          "sha256": "322588ee5d45a91318642260d4429e44bb71d7a539826eba3f1dc6b2f6bbf24f",
+          "packed_bytes": 1055,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "enchanting_table_bottom.png",
+          "jar_member": "assets/minecraft/textures/blocks/enchanting_table_bottom.png",
+          "sha256": "9933436b4f7c23b67c15448193aef5f16ee25a7f386465fed517e62fcad36e50",
+          "packed_bytes": 438,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "enchanting_table_side.png",
+          "jar_member": "assets/minecraft/textures/blocks/enchanting_table_side.png",
+          "sha256": "efd38bdb1b93514396e8a7b01b8b8c0a6ed57e279f9cd31176d941149341120e",
+          "packed_bytes": 359,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "enchanting_table_top.png",
+          "jar_member": "assets/minecraft/textures/blocks/enchanting_table_top.png",
+          "sha256": "3b64a27f39cd133164328e5bebd258f33a1f48da9e29870688e3b71abc792f5a",
+          "packed_bytes": 221,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "ender.png",
+          "jar_member": "assets/minecraft/textures/entity/chest/ender.png",
+          "sha256": "ebb5847c8514c0918a0b489d4c7454fc3c425e23b0efa366932ab48ee67d5684",
+          "packed_bytes": 2494,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "furnace_front_off.png",
+          "jar_member": "assets/minecraft/textures/blocks/furnace_front_off.png",
+          "sha256": "f349592422e35fe0bd181cce986abf6d10f366daa28ae71419fd508bab23d4b9",
+          "packed_bytes": 615,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "furnace_side.png",
+          "jar_member": "assets/minecraft/textures/blocks/furnace_side.png",
+          "sha256": "4cf287920134a409c9401d067c1370f8d920ae3c435a71528b26a209c42131b9",
+          "packed_bytes": 564,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "furnace_top.png",
+          "jar_member": "assets/minecraft/textures/blocks/furnace_top.png",
+          "sha256": "fc197ab254d72e04b150c45f7ff7950d1e82f7d662ccd63f570ab5aad6dda8a5",
+          "packed_bytes": 550,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "normal.png",
+          "jar_member": "assets/minecraft/textures/entity/chest/normal.png",
+          "sha256": "3c6be69bf69a2f923d17c4e9e1089b2ee1d64c728bac017f1432118ac4b1cd7d",
+          "packed_bytes": 1302,
+          "exact_jar_byte_match": true
+        },
+        {
+          "image": "planks_oak.png",
+          "jar_member": "assets/minecraft/textures/blocks/planks_oak.png",
+          "sha256": "9dd3c835cdf48f5d73ca77f1545d587967441f0de3cff557cbb83f09e43b1686",
+          "packed_bytes": 247,
+          "exact_jar_byte_match": true
+        }
+      ],
+      "official_blockstates": [
+        {
+          "file": "evidence/legacy/anvil-blockstate.json",
+          "jar_member": "assets/minecraft/blockstates/anvil.json",
+          "exact_jar_byte_match": true
+        },
+        {
+          "file": "evidence/legacy/brewing_stand-blockstate.json",
+          "jar_member": "assets/minecraft/blockstates/brewing_stand.json",
+          "exact_jar_byte_match": true
+        },
+        {
+          "file": "evidence/legacy/crafting_table-blockstate.json",
+          "jar_member": "assets/minecraft/blockstates/crafting_table.json",
+          "exact_jar_byte_match": true
+        },
+        {
+          "file": "evidence/legacy/enchanting_table-blockstate.json",
+          "jar_member": "assets/minecraft/blockstates/enchanting_table.json",
+          "exact_jar_byte_match": true
+        },
+        {
+          "file": "evidence/legacy/furnace-blockstate.json",
+          "jar_member": "assets/minecraft/blockstates/furnace.json",
+          "exact_jar_byte_match": true
+        }
+      ]
+    }
+  ]
+}

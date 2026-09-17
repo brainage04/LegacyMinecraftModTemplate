@@ -1,0 +1,111 @@
+[
+  {
+    "image": "legacy-hub-down-left-1.png",
+    "resolution": [
+      1024,
+      1024
+    ],
+    "format": "PNG",
+    "opened_and_decoded": true,
+    "background_rgb": [
+      13,
+      10,
+      7
+    ],
+    "station_count": 7,
+    "stations": [
+      {
+        "station": "crafting_table",
+        "position": "center",
+        "box_pixels": [
+          408,
+          387,
+          616,
+          626
+        ],
+        "foreground_pixels": 34867,
+        "changed_pixels_against_approved": 0,
+        "canonical_exemption_unchanged": true
+      },
+      {
+        "station": "furnace",
+        "position": "top",
+        "box_pixels": [
+          408,
+          120,
+          616,
+          359
+        ],
+        "foreground_pixels": 36016,
+        "changed_pixels_against_approved": 33822,
+        "canonical_exemption_unchanged": null
+      },
+      {
+        "station": "enchanting_table",
+        "position": "top-right",
+        "box_pixels": [
+          700,
+          252,
+          907,
+          492
+        ],
+        "foreground_pixels": 32984,
+        "changed_pixels_against_approved": 0,
+        "canonical_exemption_unchanged": true
+      },
+      {
+        "station": "anvil",
+        "position": "bottom-right",
+        "box_pixels": [
+          719,
+          531,
+          888,
+          744
+        ],
+        "foreground_pixels": 24429,
+        "changed_pixels_against_approved": 26014,
+        "canonical_exemption_unchanged": null
+      },
+      {
+        "station": "chest",
+        "position": "bottom",
+        "box_pixels": [
+          421,
+          675,
+          603,
+          885
+        ],
+        "foreground_pixels": 27082,
+        "changed_pixels_against_approved": 9929,
+        "canonical_exemption_unchanged": null
+      },
+      {
+        "station": "ender_chest",
+        "position": "bottom-left",
+        "box_pixels": [
+          129,
+          542,
+          312,
+          751
+        ],
+        "foreground_pixels": 27445,
+        "changed_pixels_against_approved": 18378,
+        "canonical_exemption_unchanged": null
+      },
+      {
+        "station": "brewing_stand",
+        "position": "top-left",
+        "box_pixels": [
+          155,
+          254,
+          324,
+          471
+        ],
+        "foreground_pixels": 15388,
+        "changed_pixels_against_approved": 0,
+        "canonical_exemption_unchanged": true
+      }
+    ],
+    "no_foreground_outside_projected_geometry": true
+  }
+]

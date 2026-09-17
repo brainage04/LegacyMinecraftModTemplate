@@ -1,0 +1,205 @@
+[
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/crafting_table.json",
+    "path": "assets/legacy/assets/minecraft/models/block/crafting_table.json",
+    "sha256": "23de0c12e67aba24b4d623716f77fb8b7585b90454f2af0c524127617fac563e"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/cube.json",
+    "path": "assets/legacy/assets/minecraft/models/block/cube.json",
+    "sha256": "016def181fc600f646ff636b6cf1be3126960daaf457140ec75b477642b52f87"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/crafting_table_front.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/crafting_table_front.png",
+    "sha256": "2d26be595d1984df716ecf84e6a70cdbf219aefdf7494414bb1e2866954b43db"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/planks_oak.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/planks_oak.png",
+    "sha256": "9dd3c835cdf48f5d73ca77f1545d587967441f0de3cff557cbb83f09e43b1686"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/crafting_table_top.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/crafting_table_top.png",
+    "sha256": "32208808c69c258cb99bd40e42a64c2a796ae3f0506fc02368d808379578283d"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/crafting_table_side.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/crafting_table_side.png",
+    "sha256": "aa1d8bfee4b59059597dd19dea73d3efa65617799403742c8295483d7f1e5f9e"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/furnace.json",
+    "path": "assets/legacy/assets/minecraft/models/block/furnace.json",
+    "sha256": "ae0d40bd83d79af373d74d02bf77165c04678bd702cdacb6748aa6a57d34dbfd"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/orientable.json",
+    "path": "assets/legacy/assets/minecraft/models/block/orientable.json",
+    "sha256": "15bd14e5771420ba55415b2be8b5a57a6a5ed6d44c72901086a5b1b5b86b388e"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/furnace_top.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/furnace_top.png",
+    "sha256": "fc197ab254d72e04b150c45f7ff7950d1e82f7d662ccd63f570ab5aad6dda8a5"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/furnace_front_off.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/furnace_front_off.png",
+    "sha256": "f349592422e35fe0bd181cce986abf6d10f366daa28ae71419fd508bab23d4b9"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/furnace_side.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/furnace_side.png",
+    "sha256": "4cf287920134a409c9401d067c1370f8d920ae3c435a71528b26a209c42131b9"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/brewing_stand_bottles_123.json",
+    "path": "assets/legacy/assets/minecraft/models/block/brewing_stand_bottles_123.json",
+    "sha256": "aa8d022b16b37d98bdc8243e4b2f5b446af23a566ab1c49b711c75b69c50f6dd"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/brewing_stand.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/brewing_stand.png",
+    "sha256": "dfe53a700ad60ca67ed2f380acdab528705bb663f3235f71171db2f364bbc253"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/brewing_stand_base.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/brewing_stand_base.png",
+    "sha256": "23bda4eda50e83d73df2c1a748d7ed1f62fb70d4cfd5fc882b0331efb4673b21"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/anvil_undamaged.json",
+    "path": "assets/legacy/assets/minecraft/models/block/anvil_undamaged.json",
+    "sha256": "df8b716fd3b7535dc37db1299ff6aa7a609b26f7e61c096c746e86d9adbba6af"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/anvil.json",
+    "path": "assets/legacy/assets/minecraft/models/block/anvil.json",
+    "sha256": "a8068f63879defdea847f65fc0adb9d0b7d0a24966cdc7c7ee14d5cf9dd67ead"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/anvil_base.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/anvil_base.png",
+    "sha256": "4cabcffe73c588c2054d078a2610884cda4ee545fe55c68ca9323b0d78963ba6"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/anvil_top_damaged_0.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/anvil_top_damaged_0.png",
+    "sha256": "8c5df6f382350ee8d8cee7b7b8c21960236c8f21e08308b3447eb591ec4cf055"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/models/block/enchanting_table_base.json",
+    "path": "assets/legacy/assets/minecraft/models/block/enchanting_table_base.json",
+    "sha256": "2caa0b5ec648e9a0d1a18725dc7e3e9866f83a9d72bdc2716f0b347bf89dbec6"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/enchanting_table_bottom.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/enchanting_table_bottom.png",
+    "sha256": "9933436b4f7c23b67c15448193aef5f16ee25a7f386465fed517e62fcad36e50"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/enchanting_table_top.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/enchanting_table_top.png",
+    "sha256": "3b64a27f39cd133164328e5bebd258f33a1f48da9e29870688e3b71abc792f5a"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/blocks/enchanting_table_side.png",
+    "path": "assets/legacy/assets/minecraft/textures/blocks/enchanting_table_side.png",
+    "sha256": "efd38bdb1b93514396e8a7b01b8b8c0a6ed57e279f9cd31176d941149341120e"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/crafting_table.json",
+    "path": "assets/legacy/assets/minecraft/blockstates/crafting_table.json",
+    "sha256": "dffd779098cb3b5e84fc58dc1b4830acb6e4208dd95f9cc9f5da1dce8c117ba5"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/brewing_stand.json",
+    "path": "assets/legacy/assets/minecraft/blockstates/brewing_stand.json",
+    "sha256": "060985e0e356df010e159cf793253143a3a63ff3c423964f916213161b37ac32"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/anvil.json",
+    "path": "assets/legacy/assets/minecraft/blockstates/anvil.json",
+    "sha256": "22a7af34b1b3a0d08d311ad4103148883869e236523e06e7ac1d57ea893d20ac"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/furnace.json",
+    "path": "assets/legacy/assets/minecraft/blockstates/furnace.json",
+    "sha256": "00b686f78519539a26591a5f26660bd26cb8a33b0fe26115153687dc65c831df"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/entity/chest/normal.png",
+    "path": "assets/legacy/assets/minecraft/textures/entity/chest/normal.png",
+    "sha256": "3c6be69bf69a2f923d17c4e9e1089b2ee1d64c728bac017f1432118ac4b1cd7d"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/entity/chest/ender.png",
+    "path": "assets/legacy/assets/minecraft/textures/entity/chest/ender.png",
+    "sha256": "ebb5847c8514c0918a0b489d4c7454fc3c425e23b0efa366932ab48ee67d5684"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/textures/entity/enchanting_table_book.png",
+    "path": "assets/legacy/assets/minecraft/textures/entity/enchanting_table_book.png",
+    "sha256": "322588ee5d45a91318642260d4429e44bb71d7a539826eba3f1dc6b2f6bbf24f"
+  }
+]

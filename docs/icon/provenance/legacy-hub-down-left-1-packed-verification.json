@@ -1,0 +1,355 @@
+{
+  "reopened_packed_scene": true,
+  "embedded_scripts_match_disk": true,
+  "facing_table": [
+    {
+      "template": "legacy",
+      "station": "crafting_table",
+      "position": "center",
+      "position_blender_xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "position_minecraft_xyz": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "facing": "n/a - no facing blockstate",
+      "applied_rotation_degrees_blender_z": 0,
+      "canonical_model_y_degrees": 0,
+      "minecraft_direction_xyz": null,
+      "blender_direction_xyz": null,
+      "camera_relative_direction_xyz": null,
+      "screen_delta_pixels_per_block_xy_y_down": null,
+      "proof": "No facing blockstate. Approved canonical rotation and all child transforms retained.",
+      "blockstate_evidence": {
+        "json": "evidence/legacy/crafting_table-blockstate.json",
+        "proof": "Official blockstate contains no facing property; canonical parent rotation remains zero."
+      }
+    },
+    {
+      "template": "legacy",
+      "station": "furnace",
+      "position": "top",
+      "position_blender_xyz": [
+        -2.276883840560913,
+        2.276883840560913,
+        0.0
+      ],
+      "position_minecraft_xyz": [
+        -2.276883840560913,
+        0.0,
+        2.276883840560913
+      ],
+      "facing": "east",
+      "applied_rotation_degrees_blender_z": -90,
+      "canonical_model_y_degrees": 90,
+      "minecraft_direction_xyz": [
+        1,
+        0,
+        0
+      ],
+      "blender_direction_xyz": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "camera_relative_direction_xyz": [
+        -0.7071068286895752,
+        -0.4082481861114502,
+        0.5773501396179199
+      ],
+      "screen_delta_pixels_per_block_xy_y_down": [
+        -101.26959228515625,
+        58.46795654296875
+      ],
+      "proof": "Minecraft east (+X) -> Blender (0,-1,0); camera-relative X<0 and Y<0, hence left and down. PNG coordinate Y grows downward.",
+      "blockstate_evidence": {
+        "json": "evidence/legacy/furnace-blockstate.json",
+        "selected_variant": {
+          "facing=east": {
+            "model": "furnace",
+            "y": 90
+          }
+        }
+      },
+      "visible_front_proof": {
+        "textured_front_polygon_normals": [
+          [
+            -1.1920928955078125e-07,
+            -1.0,
+            -8.742277657347586e-08
+          ]
+        ]
+      }
+    },
+    {
+      "template": "legacy",
+      "station": "enchanting_table",
+      "position": "top-right",
+      "position_blender_xyz": [
+        0.30063319206237793,
+        2.577517032623291,
+        0.0
+      ],
+      "position_minecraft_xyz": [
+        -2.577517032623291,
+        0.0,
+        -0.30063319206237793
+      ],
+      "facing": "n/a - no facing blockstate",
+      "applied_rotation_degrees_blender_z": 0,
+      "canonical_model_y_degrees": 0,
+      "minecraft_direction_xyz": null,
+      "blender_direction_xyz": null,
+      "camera_relative_direction_xyz": null,
+      "screen_delta_pixels_per_block_xy_y_down": null,
+      "proof": "No facing blockstate. Approved canonical rotation and all child transforms retained.",
+      "blockstate_evidence": {
+        "json": "evidence/legacy/enchanting_table-blockstate.json",
+        "proof": "Official blockstate contains no facing property; canonical parent rotation remains zero."
+      },
+      "note": "The table has no facing blockstate. Its separate book entity retains the approved toward-centre pose, not an invented table facing."
+    },
+    {
+      "template": "legacy",
+      "station": "anvil",
+      "position": "bottom-right",
+      "position_blender_xyz": [
+        2.577517032623291,
+        0.30063319206237793,
+        0.0
+      ],
+      "position_minecraft_xyz": [
+        -0.30063319206237793,
+        0.0,
+        -2.577517032623291
+      ],
+      "facing": "east",
+      "applied_rotation_degrees_blender_z": -90,
+      "canonical_model_y_degrees": 270,
+      "minecraft_direction_xyz": [
+        1,
+        0,
+        0
+      ],
+      "blender_direction_xyz": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "camera_relative_direction_xyz": [
+        -0.7071068286895752,
+        -0.4082481861114502,
+        0.5773501396179199
+      ],
+      "screen_delta_pixels_per_block_xy_y_down": [
+        -101.26959228515625,
+        58.46795654296875
+      ],
+      "proof": "Minecraft east (+X) -> Blender (0,-1,0); camera-relative X<0 and Y<0, hence left and down. PNG coordinate Y grows downward.",
+      "blockstate_evidence": {
+        "json": "evidence/legacy/anvil-blockstate.json",
+        "selected_variant": {
+          "damage=0,facing=east": {
+            "model": "anvil_undamaged",
+            "y": 270
+          }
+        }
+      },
+      "note": "Canonical geometry is symmetric under 180 degrees: semantic east is proven by the legal blockstate/model transform, not a fabricated front marker."
+    },
+    {
+      "template": "legacy",
+      "station": "chest",
+      "position": "bottom",
+      "position_blender_xyz": [
+        2.276883840560913,
+        -2.276883840560913,
+        0.0
+      ],
+      "position_minecraft_xyz": [
+        2.276883840560913,
+        0.0,
+        -2.276883840560913
+      ],
+      "facing": "east",
+      "applied_rotation_degrees_blender_z": -90,
+      "canonical_model_y_degrees": 90,
+      "minecraft_direction_xyz": [
+        1,
+        0,
+        0
+      ],
+      "blender_direction_xyz": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "camera_relative_direction_xyz": [
+        -0.7071068286895752,
+        -0.4082481861114502,
+        0.5773501396179199
+      ],
+      "screen_delta_pixels_per_block_xy_y_down": [
+        -101.26959228515625,
+        58.467987060546875
+      ],
+      "proof": "Minecraft east (+X) -> Blender (0,-1,0); camera-relative X<0 and Y<0, hence left and down. PNG coordinate Y grows downward.",
+      "blockstate_evidence": {
+        "kind": "vanilla entity-rendered block",
+        "proof": "The approved canonical north-facing latch has local Minecraft -Z normal; legal cardinal block facing is applied to the whole chest, not inferred from entity blockstate JSON.",
+        "json": null
+      },
+      "visible_front_proof": {
+        "latch_horizontal_direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "normal_points_toward_camera": true
+      }
+    },
+    {
+      "template": "legacy",
+      "station": "ender_chest",
+      "position": "bottom-left",
+      "position_blender_xyz": [
+        -0.30063319206237793,
+        -2.577517032623291,
+        0.0
+      ],
+      "position_minecraft_xyz": [
+        2.577517032623291,
+        0.0,
+        0.30063319206237793
+      ],
+      "facing": "east",
+      "applied_rotation_degrees_blender_z": -90,
+      "canonical_model_y_degrees": 90,
+      "minecraft_direction_xyz": [
+        1,
+        0,
+        0
+      ],
+      "blender_direction_xyz": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "camera_relative_direction_xyz": [
+        -0.7071068286895752,
+        -0.4082481861114502,
+        0.5773501396179199
+      ],
+      "screen_delta_pixels_per_block_xy_y_down": [
+        -101.2695541381836,
+        58.467987060546875
+      ],
+      "proof": "Minecraft east (+X) -> Blender (0,-1,0); camera-relative X<0 and Y<0, hence left and down. PNG coordinate Y grows downward.",
+      "blockstate_evidence": {
+        "kind": "vanilla entity-rendered block",
+        "proof": "The approved canonical north-facing latch has local Minecraft -Z normal; legal cardinal block facing is applied to the whole chest, not inferred from entity blockstate JSON.",
+        "json": null
+      },
+      "visible_front_proof": {
+        "latch_horizontal_direction": [
+          -1.2715658215256553e-07,
+          -1.0,
+          0.0
+        ],
+        "normal_points_toward_camera": true
+      }
+    },
+    {
+      "template": "legacy",
+      "station": "brewing_stand",
+      "position": "top-left",
+      "position_blender_xyz": [
+        -2.577517032623291,
+        -0.30063319206237793,
+        0.0
+      ],
+      "position_minecraft_xyz": [
+        0.30063319206237793,
+        0.0,
+        2.577517032623291
+      ],
+      "facing": "n/a - no facing blockstate",
+      "applied_rotation_degrees_blender_z": 0,
+      "canonical_model_y_degrees": 0,
+      "minecraft_direction_xyz": null,
+      "blender_direction_xyz": null,
+      "camera_relative_direction_xyz": null,
+      "screen_delta_pixels_per_block_xy_y_down": null,
+      "proof": "No facing blockstate. Approved canonical rotation and all child transforms retained.",
+      "blockstate_evidence": {
+        "json": "evidence/legacy/brewing_stand-blockstate.json",
+        "proof": "Official blockstate contains no facing property; canonical parent rotation remains zero."
+      }
+    }
+  ],
+  "station_bounds_normalized_xy_y_up": {
+    "crafting_table": [
+      0.4011041224002838,
+      0.39151453971862793,
+      0.5988962054252625,
+      0.6199051737785339
+    ],
+    "furnace": [
+      0.4011041522026062,
+      0.651524007320404,
+      0.5988962650299072,
+      0.8799146413803101
+    ],
+    "enchanting_table": [
+      0.6857417821884155,
+      0.5215192437171936,
+      0.8835339546203613,
+      0.7516431212425232
+    ],
+    "anvil": [
+      0.7042847871780396,
+      0.2757841646671295,
+      0.8649908304214478,
+      0.4791945815086365
+    ],
+    "chest": [
+      0.41346606612205505,
+      0.13864226639270782,
+      0.5865341424942017,
+      0.3384840786457062
+    ],
+    "ender_chest": [
+      0.12882839143276215,
+      0.26864704489707947,
+      0.30189651250839233,
+      0.468488872051239
+    ],
+    "brewing_stand": [
+      0.15355247259140015,
+      0.5429309606552124,
+      0.3142585754394531,
+      0.7499099373817444
+    ]
+  },
+  "all_mesh_vertices_topology_uvs_material_assignments_unchanged": true,
+  "all_station_positions_unchanged": true,
+  "all_non_facing_transforms_unchanged_including_book": true,
+  "camera_yaw45_projection_world_color_management_unchanged": true,
+  "lighting_formula_and_parameters_unchanged": true,
+  "packed_texture_bytes_unchanged": true,
+  "station_projected_bounds_disjoint": true,
+  "all_geometry_fully_in_frame": true,
+  "brewing_feet": 3,
+  "brewing_arm_planes": 3,
+  "mesh_count": 24,
+  "packed_texture_count": 17,
+  "camera_relative_east_direction_xyz": [
+    -0.7071068286895752,
+    -0.4082481861114502,
+    0.5773501396179199
+  ]
+}

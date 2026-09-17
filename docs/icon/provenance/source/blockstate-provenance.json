@@ -1,0 +1,51 @@
+[
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/crafting_table.json",
+    "path": "evidence/legacy/crafting_table-blockstate.json",
+    "sha256": "dffd779098cb3b5e84fc58dc1b4830acb6e4208dd95f9cc9f5da1dce8c117ba5"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/brewing_stand.json",
+    "path": "evidence/legacy/brewing_stand-blockstate.json",
+    "sha256": "060985e0e356df010e159cf793253143a3a63ff3c423964f916213161b37ac32"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/enchanting_table.json",
+    "path": "evidence/legacy/enchanting_table-blockstate.json",
+    "sha256": "2a5d76c7df87cb32ddaa1a8331f6f2ba650fb86842d6749470b07e6c48d63183"
+  },
+  {
+    "era": "legacy",
+    "station": "chest",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/chest.json",
+    "note": "No JSON blockstate for legacy entity-rendered chest; vanilla cardinal chest facing handled by entity renderer."
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/furnace.json",
+    "path": "evidence/legacy/furnace-blockstate.json",
+    "sha256": "00b686f78519539a26591a5f26660bd26cb8a33b0fe26115153687dc65c831df"
+  },
+  {
+    "era": "legacy",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/anvil.json",
+    "path": "evidence/legacy/anvil-blockstate.json",
+    "sha256": "22a7af34b1b3a0d08d311ad4103148883869e236523e06e7ac1d57ea893d20ac"
+  },
+  {
+    "era": "legacy",
+    "station": "ender_chest",
+    "source": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/minecraft-1.8.9-client.jar",
+    "member": "assets/minecraft/blockstates/ender_chest.json",
+    "note": "No JSON blockstate for legacy entity-rendered chest; vanilla cardinal chest facing handled by entity renderer."
+  }
+]

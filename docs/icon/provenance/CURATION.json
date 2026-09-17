@@ -1,0 +1,103 @@
+{
+  "mod": "LegacyMinecraftModTemplate",
+  "source_folder": "round3/blender-q",
+  "source_folder_absolute": "/home/thomas/01_TM/Coding/Websites/brainage04.github.io/.local-icon-variants/round3/blender-q",
+  "icon_source": "blender-q/legacy-hub-down-left-1.png",
+  "icon_sha256_source": "859c634f4499a96627cb4e04c54c4f57509c542fb5af5d724c1c2efd6a6fc112",
+  "icon_sha256_copy": "859c634f4499a96627cb4e04c54c4f57509c542fb5af5d724c1c2efd6a6fc112",
+  "icon_dimensions": [
+    1024,
+    1024
+  ],
+  "files_copied": [
+    "asset-verification.json",
+    "cleanup.json",
+    "evidence/legacy/anvil-blockstate.json",
+    "evidence/legacy/brewing_stand-blockstate.json",
+    "evidence/legacy/crafting_table-blockstate.json",
+    "evidence/legacy/enchanting_table-blockstate.json",
+    "evidence/legacy/furnace-blockstate.json",
+    "facing-table.csv",
+    "facing-table.json",
+    "legacy-hub-down-left-1-metadata.json",
+    "legacy-hub-down-left-1-packed-verification.json",
+    "legacy-hub-down-left-1.blend",
+    "legacy-hub-down-left-1.py",
+    "manifest.json",
+    "png-verification.json",
+    "render_down_left.py",
+    "source-snapshot.json",
+    "source/asset-provenance.json",
+    "source/blockstate-provenance.json",
+    "source/legacy-hub-1.blend",
+    "source/minecraft.py",
+    "source/render_hubs.py",
+    "verify_assets.py",
+    "verify_pngs.py",
+    "visual-review.json"
+  ],
+  "file_count_copied": 25,
+  "json_curation": [
+    {
+      "file": "source-snapshot.json",
+      "curation": "kept the legacy approved-source hashes"
+    },
+    {
+      "file": "source/asset-provenance.json",
+      "curation": "kept the legacy client-asset rows only"
+    },
+    {
+      "file": "source/blockstate-provenance.json",
+      "curation": "kept the legacy blockstate rows only"
+    },
+    {
+      "file": "manifest.json",
+      "curation": "kept the legacy-hub-down-left-1 entry only; the other template entry belongs to the sibling repository"
+    },
+    {
+      "file": "png-verification.json",
+      "curation": "kept the legacy-hub-down-left-1.png row"
+    },
+    {
+      "file": "asset-verification.json",
+      "curation": "kept the legacy-hub-down-left-1 render row"
+    },
+    {
+      "file": "visual-review.json",
+      "curation": "kept the legacy review row"
+    }
+  ],
+  "excluded": [
+    {
+      "path": "blender-q/modern-hub*",
+      "reason": "belongs to modern-hub template repository"
+    },
+    {
+      "path": "blender-q/evidence/modern/*",
+      "reason": "sibling template evidence"
+    },
+    {
+      "path": "blender-q/source/modern-hub-1.blend",
+      "reason": "sibling template source scene"
+    },
+    {
+      "path": "blender-q/blockers.json",
+      "reason": "empty blocker list"
+    },
+    {
+      "path": "blender-q/source/assets/ (absent)",
+      "reason": "client assets must be re-extracted; see README"
+    }
+  ],
+  "bytes_added_total": 729730,
+  "deliverable": {
+    "icon": "icon.png",
+    "icon_sha256_round3_source": "859c634f4499a96627cb4e04c54c4f57509c542fb5af5d724c1c2efd6a6fc112",
+    "icon_sha256_shipped_copy": "859c634f4499a96627cb4e04c54c4f57509c542fb5af5d724c1c2efd6a6fc112",
+    "provenance_file_count": 25,
+    "total_file_count": 28,
+    "total_bytes": 738397,
+    "largest_file": "icon.png",
+    "largest_file_bytes": 259157
+  }
+}
