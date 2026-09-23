@@ -11,7 +11,7 @@
       "${username}"
     ],
     "credits": "brainage04, hannibal002, nea89o, Moulberry",
-    "logoFile": "",
+    "logoFile": "icon.png",
     "screenshots": [],
     "dependencies": []
   }
