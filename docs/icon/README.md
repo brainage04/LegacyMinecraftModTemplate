@@ -1,21 +1,21 @@
 # LegacyMinecraftModTemplate icon
 
-## What this is
+## The icon
 
-`icon.png` — the LegacyMinecraftModTemplate mod icon, 1024 x 1024 PNG, SHA-256
+`icon.png` – the LegacyMinecraftModTemplate mod icon, 1024 x 1024 PNG, SHA-256
 `859c634f4499a96627cb4e04c54c4f57509c542fb5af5d724c1c2efd6a6fc112`.
 
 Copied byte-identically from `.local-icon-variants/provenance/from-round3/blender-q/legacy-hub-down-left-1.png`
 (SHA-256 verified at the source, and again on the copy). The hash matches `png_sha256` in
 `provenance/legacy-hub-down-left-1-metadata.json` and `provenance/png-verification.json`.
 
-## How it was made
+## Making the icon
 
 Blender render of the approved template hub, not a screenshot.
 
 * Blender 5.1.1, headless `--background -noaudio --threads 3`, Cycles CPU (no GPU), 32 samples,
   1024 x 1024, 1.484 s. No display server, no audio sink, no shader pack.
-* Composition: the approved legacy hub, unchanged — seven separated workstations
+* Composition: the approved legacy hub, unchanged – seven separated workstations
   (`crafting_table` centre, `furnace` top, `enchanting_table` top-right, `anvil` bottom-right,
   `chest` bottom, `ender_chest` bottom-left, `brewing_stand` top-left), same positions, canonical
   meshes and UVs, same lighting formula, camera, framing and background as the approved source
@@ -27,7 +27,7 @@ Blender render of the approved template hub, not a screenshot.
   `crafting_table`, `enchanting_table` and `brewing_stand` have no facing blockstate and stay
   canonical. Per-station proof, camera-relative directions and screen deltas are in
   `provenance/facing-table.json` / `facing-table.csv`.
-* Imagery — **extracted from the real Minecraft 1.8.9 client**, not re-drawn and not shipped as a jar.
+* Imagery – **extracted from the real Minecraft 1.8.9 client**, not re-drawn and not shipped as a jar.
   Source jar: `.local-icon-variants/round3/minecraft-1.8.9-client.jar`. Every texture the scene uses is
   packed into the saved `.blend` and is byte-identical to its jar member; `asset-verification.json`
   lists each packed texture with its jar member, SHA-256 and exact byte match. `source/asset-provenance.json`
@@ -38,22 +38,22 @@ Blender render of the approved template hub, not a screenshot.
 
 ## Provenance files
 
-* `legacy-hub-down-left-1.py` — entry point (`render_down_left.render('legacy')`); `render_down_left.py` —
+* `legacy-hub-down-left-1.py` – entry point (`render_down_left.render('legacy')`); `render_down_left.py` –
   the cutover script that loads the approved packed scene and applies the facing change.
-* `source/render_hubs.py`, `source/minecraft.py` — the approved hub author and the vanilla model/atlas
+* `source/render_hubs.py`, `source/minecraft.py` – the approved hub author and the vanilla model/atlas
   helpers it uses (`minecraft.py` reads client assets from `source/assets/<era>/...`).
-* `source/legacy-hub-1.blend` — the immutable approved source scene
+* `source/legacy-hub-1.blend` – the immutable approved source scene
   (SHA-256 `146a2d29537fb1a8756b3880266f1df2e6bfd2894e29ed5dfa4a02d92e338142`).
 * `legacy-hub-down-left-1.blend` (packed, embeds `minecraft.py`, `render_hubs.py` and the entry point),
   `-metadata.json`, `-packed-verification.json` (reopens the saved scene and re-proves geometry, facing
   and packed textures), `facing-table.*`, `evidence/legacy/*` blockstate extracts.
 * `asset-verification.json`, `source/asset-provenance.json`, `source/blockstate-provenance.json`,
-  `source-snapshot.json`, `png-verification.json`, `visual-review.json`, `cleanup.json` — curated to the
+  `source-snapshot.json`, `png-verification.json`, `visual-review.json`, `cleanup.json` – curated to the
   legacy render (`CURATION.json` records the dropped rows).
-* `verify_assets.py`, `verify_pngs.py` — the verification scripts.
-* `CURATION.json` — what was copied, what was filtered, and what was left in round-3.
+* `verify_assets.py`, `verify_pngs.py` – the verification scripts.
+* `CURATION.json` – what was copied, what was filtered, and what was left in round-3.
 
-## How to regenerate
+## Regenerating the icon
 
 The scripts read client assets from `source/assets/<era>/...`, which must exist first. Re-extract them
 from the recorded jar with the recorded member list (paths and members are taken from
