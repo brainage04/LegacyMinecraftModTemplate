@@ -8,6 +8,7 @@ plugins {
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.gradleup.shadow") version "9.6.1"
     kotlin("jvm") version "2.3.10"
+    id("com.diffplug.spotless") version "8.9.0"
 }
 
 //Constants:
@@ -23,6 +24,17 @@ val username: String by project
 // Toolchains:
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+}
+
+// Formatting, the same Java settings as MinecraftModConventions' java-quality-conventions:
+spotless {
+    java {
+        target("src/**/*.java")
+        googleJavaFormat("1.36.1").aosp()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 // Dependencies:
