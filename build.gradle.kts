@@ -115,7 +115,7 @@ tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8"
 }
 
-tasks.withType(Jar::class) {
+tasks.withType(org.gradle.jvm.tasks.Jar::class) {
     archiveBaseName.set(modid)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.attributes.run {
