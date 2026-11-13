@@ -76,7 +76,7 @@ dependencies {
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
 
-    shadowModImpl("org.notenoughupdates.moulconfig:legacy:3.0.0-beta.3")
+    shadowModImpl("org.notenoughupdates.moulconfig:legacy:4.8.0")
 
     shadowImpl(libs.libautoupdate)
     shadowImpl("org.jetbrains.kotlin:kotlin-reflect:2.3.10")
@@ -90,7 +90,7 @@ loom {
             property("mixin.debug", "true")
             property("asmhelper.verbose", "true")
             programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
-            programArgs("--tweakClass", "io.github.moulberry.moulconfig.tweaker.DevelopmentResourceTweaker")
+            programArgs("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
         }
     }
     forge {
@@ -158,7 +158,7 @@ tasks.shadowJar {
     exclude("META-INF/versions/**")
 
     // If you want to include other dependencies and shadow them, you can relocate them in here
-    relocate("io.github.moulberry.moulconfig", "$baseGroup.deps.moulconfig")
+    relocate("io.github.notenoughupdates.moulconfig", "$baseGroup.deps.moulconfig")
     relocate("moe.nea.libautoupdate", "$baseGroup.deps.libautoupdate")
 }
 

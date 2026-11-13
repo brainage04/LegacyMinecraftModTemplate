@@ -3,8 +3,8 @@ package com.example.config.categories;
 import com.example.utils.ChatUtils;
 import com.example.utils.SoundUtils;
 import com.google.gson.annotations.Expose;
-import io.github.moulberry.moulconfig.annotations.*;
-import io.github.moulberry.moulconfig.observer.Property;
+import io.github.notenoughupdates.moulconfig.annotations.*;
+import io.github.notenoughupdates.moulconfig.observer.Property;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Arrays;
