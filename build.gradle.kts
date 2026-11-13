@@ -162,6 +162,10 @@ tasks.shadowJar {
     configurations = listOf(shadowImpl, shadowModImpl)
     exclude("META-INF/versions/**")
 
+    // Relocation renames the classes named in META-INF/services, so those files have to be regenerated;
+    // without this ServiceLoader still looks for the unrelocated name and finds nothing.
+    mergeServiceFiles()
+
     // If you want to include other dependencies and shadow them, you can relocate them in here
     relocate("io.github.notenoughupdates.moulconfig", "$baseGroup.deps.moulconfig")
     relocate("moe.nea.libautoupdate", "$baseGroup.deps.libautoupdate")
