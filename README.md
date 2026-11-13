@@ -2,24 +2,29 @@
 
 A maintained Forge 1.8.9 mod template based on [hannibal002's template](https://github.com/hannibal002/Example-1.8.9-Mod), with Kotlin, Mixin, MoulConfig, and reusable configuration utilities.
 
-## Use the template
+## Features
+
+See above.
+
+## Getting started
 
 Create a repository with GitHub's **Use this template** button. The `Initialize Template Repo` workflow derives a Java-safe package, project class, and mod id from the new repository name.
 
-For local initialization:
+For local initialization, run `./init.sh <new-package-name> <project-class-name> <modid> <owner>` (see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)).
 
-```shell
-./init.sh <new-package-name> <project-class-name> <modid> <owner>
-```
+## Commands
 
-The initialization script rewrites the package and metadata, moves Java and Kotlin sources, renames the main class and Mixin configuration, and removes its one-shot scaffolding.
+- `/examplemod` - opens the config GUI.
+- `Enter` - opens the config GUI (rebindable under Controls).
 
-## Build
+## Configuration
 
-Run Gradle with Java 21 or newer:
+The example MoulConfig config is saved to `config/examplemod/config.json`.
 
-```shell
-./gradlew --no-daemon build
-```
+## Compatibility
 
-The build uses Gradle 9.3.1 and Essential Loom 1.15.50, while the produced Forge 1.8.9 mod remains Java 8 compatible.
+No known incompatibilities.
+
+## Documentation
+
+- [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) - initialising, building and the smoke test.

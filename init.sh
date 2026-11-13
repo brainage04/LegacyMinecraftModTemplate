@@ -103,6 +103,7 @@ if [ -z "${GITHUB_ACTIONS:-}" ]; then
 fi
 rm -f "$base/.github/scripts/smoke_template_generation.sh"
 rmdir "$base/.github/scripts" 2>/dev/null || true
+rm -f "$base/docs/DEVELOPMENT.md"
 rm -f "$(readlink -f "$0")"
 
 # Renaming changes line lengths, so google-java-format can wrap the renamed sources differently,
