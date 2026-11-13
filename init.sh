@@ -91,6 +91,6 @@ EOF
 if [ -z "${GITHUB_ACTIONS:-}" ]; then
   rm -f "$base/.github/workflows/init.yml"
 fi
-rm -f "$base/make-my-own.sh"
+rm -f "$(readlink -f "$0")"
 
 printf 'Initialization complete.\n'

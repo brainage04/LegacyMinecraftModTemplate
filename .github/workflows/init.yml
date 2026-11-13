@@ -17,7 +17,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ ! -f make-my-own.sh ]; then
+          if [ ! -f init.sh ]; then
             echo "Repository is already initialized."
             exit 0
           fi
@@ -35,7 +35,7 @@ jobs:
 
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
-          ./make-my-own.sh "$package_name" "$project_name" "$modid" "$repository_owner"
+          ./init.sh "$package_name" "$project_name" "$modid" "$repository_owner"
           git add --all
           git commit -m "Initialize template repository" \
             -m "Set package name to ${package_name}, project name to ${project_name}, and mod id to ${modid}."
