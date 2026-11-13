@@ -52,7 +52,13 @@ tar \
   ./init.sh "${init_args[@]}" com.github.smokeowner.smokemod SmokeMod smokemod SmokeOwner
 
   assert_path_missing init.sh
-  assert_path_missing .github/workflows/init.yml
+  # init.sh keeps the workflow under GitHub Actions, because a push made with the
+  # workflow's GITHUB_TOKEN cannot update workflow files.
+  if [ -z "${GITHUB_ACTIONS:-}" ]; then
+    assert_path_missing .github/workflows/init.yml
+  else
+    assert_path_exists .github/workflows/init.yml
+  fi
   assert_path_missing .github/scripts/smoke_template_generation.sh
   assert_path_missing src/main/java/com/example
   assert_path_missing src/main/kotlin/com/example

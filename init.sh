@@ -94,6 +94,7 @@ Run Gradle with Java 21 or newer:
 ./gradlew --no-daemon build
 \`\`\`
 
+The build writes the mod jar to \`build/libs/$modid-<version>.jar\`.
 The produced mod targets Java 8 for Minecraft 1.8.9.
 EOF
 
