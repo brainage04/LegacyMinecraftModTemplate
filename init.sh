@@ -3,19 +3,28 @@
 set -euo pipefail
 
 print_help() {
-  printf 'Usage: %s <new package name> <project class name> <modid> <owner>\n' "$0"
+  printf 'Usage: %s [--skip-format] <new package name> <project class name> <modid> <owner>\n' "$0"
 }
 
-if [ "$#" -ne 4 ]; then
+format_sources="true"
+positionals=()
+for argument in "$@"; do
+  case "$argument" in
+    --skip-format) format_sources="false" ;;
+    *) positionals+=("$argument") ;;
+  esac
+done
+
+if [ "${#positionals[@]}" -ne 4 ]; then
   print_help >&2
   exit 64
 fi
 
 base=$(dirname "$(readlink -f "$0")")
-package_name="$1"
-project_name="$2"
-modid="$3"
-owner="$4"
+package_name="${positionals[0]}"
+project_name="${positionals[1]}"
+modid="${positionals[2]}"
+owner="${positionals[3]}"
 
 if [[ ! "$package_name" =~ ^[a-z_][a-z0-9_]*(\.[a-z_][a-z0-9_]*)+$ ]]; then
   printf 'Invalid Java package: %s\n' "$package_name" >&2
@@ -91,6 +100,15 @@ EOF
 if [ -z "${GITHUB_ACTIONS:-}" ]; then
   rm -f "$base/.github/workflows/init.yml"
 fi
+rm -f "$base/.github/scripts/smoke_template_generation.sh"
+rmdir "$base/.github/scripts" 2>/dev/null || true
 rm -f "$(readlink -f "$0")"
+
+# Renaming changes line lengths, so google-java-format can wrap the renamed sources differently,
+# and spotlessCheck fails the generated mod's build on any unformatted line.
+if [ "$format_sources" = "true" ]; then
+  printf 'Formatting the renamed sources with Spotless\n'
+  (cd "$base" && ./gradlew --no-daemon --quiet spotlessApply)
+fi
 
 printf 'Initialization complete.\n'

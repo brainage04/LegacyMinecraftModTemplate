@@ -18,6 +18,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
       - name: Execute Gradle build
         run: ./gradlew --no-daemon build
+      - name: Smoke test the generated template
+        if: github.repository == 'brainage04/LegacyMinecraftModTemplate'
+        run: bash .github/scripts/smoke_template_generation.sh
       - uses: actions/upload-artifact@v7
         name: Upload built mod JAR
         with:
