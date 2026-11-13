@@ -1,6 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+import java.net.URLClassLoader
+import java.util.zip.ZipFile
+
+import org.gradle.api.tasks.bundling.AbstractArchiveTask
+
 plugins {
     idea
     java
@@ -165,6 +170,56 @@ tasks.shadowJar {
 tasks.jar {
     archiveClassifier.set("nodeps")
     destinationDirectory.set(layout.buildDirectory.dir("badjars"))
+}
+
+// MoulConfig finds its Minecraft adapter with ServiceLoader (IMinecraft.java:135 in 4.8.0), so relocating it
+// also renames the interface the service file is keyed by. Check the jar users get, because a missed service
+// file only shows up as a NoSuchElementException at the first config GUI call.
+val moulConfigPackage = "$baseGroup.deps.moulconfig"
+// Loom's remapJar is a gradle.jvm.tasks.Jar (a Zip), not a bundling.Jar, so only their common base carries archiveFile.
+val moulConfigJar = tasks.named("remapJar").map { it as AbstractArchiveTask }
+
+val verifyMoulConfigService by tasks.registering {
+    group = "verification"
+    description = "Checks the built jar registers and loads MoulConfig's Minecraft adapter after relocation."
+    dependsOn(moulConfigJar)
+    val releasedJar = moulConfigJar
+    val serviceFile = "META-INF/services/$moulConfigPackage.common.IMinecraft"
+    val originalServiceFile = "META-INF/services/io.github.notenoughupdates.moulconfig.common.IMinecraft"
+    val adapter = "$moulConfigPackage.internal.ForgeMinecraft"
+    doLast {
+        val jarFile = releasedJar.get().archiveFile.get().asFile
+        ZipFile(jarFile).use { jar ->
+            check(jar.getEntry(originalServiceFile) == null) {
+                "${jarFile.name} still has $originalServiceFile, which names a class relocation removed; add mergeServiceFiles() to tasks.shadowJar"
+            }
+            val entry = jar.getEntry(serviceFile)
+                ?: throw GradleException("${jarFile.name} has no $serviceFile; add mergeServiceFiles() to tasks.shadowJar")
+            val providers = jar.getInputStream(entry).bufferedReader().use { it.readLines() }.filter(String::isNotBlank)
+            check(providers == listOf(adapter)) {
+                "$serviceFile names $providers instead of [$adapter]"
+            }
+        }
+        val thread = Thread.currentThread()
+        val previousLoader = thread.contextClassLoader
+        URLClassLoader(arrayOf(jarFile.toURI().toURL())).use { loader ->
+            thread.contextClassLoader = loader
+            try {
+                val instance = Class.forName("$moulConfigPackage.common.IMinecraft", true, loader)
+                    .getField("INSTANCE")
+                    .get(null)
+                check(instance.javaClass.name == adapter) { "IMinecraft.INSTANCE is ${instance.javaClass.name}, not $adapter" }
+            } catch (e: Throwable) {
+                throw GradleException("$moulConfigPackage.common.IMinecraft.INSTANCE does not load from ${jarFile.name}", e)
+            } finally {
+                thread.contextClassLoader = previousLoader
+            }
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn(verifyMoulConfigService)
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
