@@ -11,7 +11,11 @@ public class ExampleModConfig extends Config {
 
     @Override
     public StructuredText getTitle() {
-        return StructuredText.of(ExampleMod.MOD_NAME + " " + ExampleMod.getVersion() + " by §cbrainage04§r, config by §5Moulberry §rand §5nea89");
+        return StructuredText.of(
+                ExampleMod.MOD_NAME
+                        + " "
+                        + ExampleMod.getVersion()
+                        + " by §cbrainage04§r, config by §5Moulberry §rand §5nea89");
     }
 
     @Override
