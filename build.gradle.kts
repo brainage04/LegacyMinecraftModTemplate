@@ -25,10 +25,6 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
-sourceSets.main {
-    java.srcDir(layout.projectDirectory.dir("src/main/kotlin"))
-}
-
 // Dependencies:
 
 repositories {

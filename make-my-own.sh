@@ -68,9 +68,9 @@ move_package_tree "$base/src/main/kotlin/com/example" "$base/src/main/kotlin/$pa
 if [ -f "$base/src/main/kotlin/$package_dir/ExampleMod.kt" ]; then
   mv "$base/src/main/kotlin/$package_dir/ExampleMod.kt" "$base/src/main/kotlin/$package_dir/$project_name.kt"
 fi
-if [ -f "$base/src/main/kotlin/$package_dir/config/ExampleModConfig.java" ]; then
-  mv "$base/src/main/kotlin/$package_dir/config/ExampleModConfig.java" \
-    "$base/src/main/kotlin/$package_dir/config/${project_name}Config.java"
+if [ -f "$base/src/main/java/$package_dir/config/ExampleModConfig.java" ]; then
+  mv "$base/src/main/java/$package_dir/config/ExampleModConfig.java" \
+    "$base/src/main/java/$package_dir/config/${project_name}Config.java"
 fi
 mv "$base/src/main/resources/mixins.examplemod.json" "$base/src/main/resources/mixins.$modid.json"
 
