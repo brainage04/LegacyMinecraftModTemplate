@@ -105,7 +105,6 @@ loom {
         named("client") {
             // If you don't want mixins, remove these lines
             property("mixin.debug", "true")
-            property("asmhelper.verbose", "true")
             programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
             programArgs("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
         }
@@ -133,7 +132,7 @@ tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8"
 }
 
-tasks.withType(Jar::class) {
+tasks.withType(org.gradle.jvm.tasks.Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.attributes.run {
         this["FMLCorePluginContainsFMLMod"] = "true"
