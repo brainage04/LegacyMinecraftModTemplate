@@ -13,12 +13,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
-      - name: Set up Java for formatting
-        if: hashFiles('init.sh') != ''
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version-file: .java-version
       - name: Initialize repository
         shell: bash
         run: |

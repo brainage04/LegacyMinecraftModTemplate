@@ -3,10 +3,10 @@
 ## Initialising
 
 ```shell
-./init.sh [--skip-format] <new-package-name> <project-class-name> <modid> <owner>
+./init.sh <new-package-name> <project-class-name> <modid> <owner>
 ```
 
-The initialization script rewrites the package and metadata, moves Java and Kotlin sources, renames the main class and Mixin configuration, and removes its one-shot scaffolding. At the end it runs `./gradlew spotlessApply`; `--skip-format` leaves that out.
+The initialization script rewrites the package and metadata, moves Java and Kotlin sources, renames the main class and Mixin configuration, and removes its one-shot scaffolding.
 
 ## Building
 
