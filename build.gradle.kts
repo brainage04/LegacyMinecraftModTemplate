@@ -189,27 +189,34 @@ tasks.jar {
 
 // MoulConfig finds its Minecraft adapter with ServiceLoader (IMinecraft.java:135 in 4.8.0), so relocating it
 // also renames the interface the service file is keyed by. Check the jar users get, because a missed service
-// file only shows up as a NoSuchElementException at the first config GUI call.
+// file only shows up in game, as a NoSuchElementException when the mod initialises its config
+// (BuiltinMoulConfigGuis.addProcessors reads IMinecraft.INSTANCE).
+// If you don't want MoulConfig, remove this task and the check wiring below, or check fails on the missing service file.
 val moulConfigPackage = "$baseGroup.deps.moulconfig"
 // Loom's remapJar is a gradle.jvm.tasks.Jar (a Zip), not a bundling.Jar, so only their common base carries archiveFile.
-val moulConfigJar = tasks.named("remapJar").map { it as AbstractArchiveTask }
+val moulConfigJar = tasks.named<AbstractArchiveTask>("remapJar").flatMap { it.archiveFile }
 
 val verifyMoulConfigService by tasks.registering {
     group = "verification"
     description = "Checks the built jar registers and loads MoulConfig's Minecraft adapter after relocation."
-    dependsOn(moulConfigJar)
+    inputs.file(moulConfigJar)
+    // doLast may only use these locals: the configuration cache cannot serialise the script that owns the top-level vals.
     val releasedJar = moulConfigJar
-    val serviceFile = "META-INF/services/$moulConfigPackage.common.IMinecraft"
+    val iMinecraft = "$moulConfigPackage.common.IMinecraft"
+    val serviceFile = "META-INF/services/$iMinecraft"
     val originalServiceFile = "META-INF/services/io.github.notenoughupdates.moulconfig.common.IMinecraft"
     val adapter = "$moulConfigPackage.internal.ForgeMinecraft"
     doLast {
-        val jarFile = releasedJar.get().archiveFile.get().asFile
+        val jarFile = releasedJar.get().asFile
         ZipFile(jarFile).use { jar ->
             check(jar.getEntry(originalServiceFile) == null) {
                 "${jarFile.name} still has $originalServiceFile, which names a class relocation removed; add mergeServiceFiles() to tasks.shadowJar"
             }
             val entry = jar.getEntry(serviceFile)
-                ?: throw GradleException("${jarFile.name} has no $serviceFile; add mergeServiceFiles() to tasks.shadowJar")
+                ?: throw GradleException(
+                    "${jarFile.name} has no $serviceFile; add mergeServiceFiles() to tasks.shadowJar, " +
+                        "or remove verifyMoulConfigService if the mod no longer uses MoulConfig"
+                )
             val providers = jar.getInputStream(entry).bufferedReader().use { it.readLines() }.filter(String::isNotBlank)
             check(providers == listOf(adapter)) {
                 "$serviceFile names $providers instead of [$adapter]"
@@ -220,12 +227,12 @@ val verifyMoulConfigService by tasks.registering {
         URLClassLoader(arrayOf(jarFile.toURI().toURL())).use { loader ->
             thread.contextClassLoader = loader
             try {
-                val instance = Class.forName("$moulConfigPackage.common.IMinecraft", true, loader)
+                val instance = Class.forName(iMinecraft, true, loader)
                     .getField("INSTANCE")
                     .get(null)
                 check(instance.javaClass.name == adapter) { "IMinecraft.INSTANCE is ${instance.javaClass.name}, not $adapter" }
             } catch (e: Throwable) {
-                throw GradleException("$moulConfigPackage.common.IMinecraft.INSTANCE does not load from ${jarFile.name}", e)
+                throw GradleException("$iMinecraft.INSTANCE does not load from ${jarFile.name}", e)
             } finally {
                 thread.contextClassLoader = previousLoader
             }
