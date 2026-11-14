@@ -60,6 +60,7 @@ tar \
     assert_path_exists .github/workflows/init.yml
   fi
   assert_path_missing .github/scripts/smoke_template_generation.sh
+  assert_path_missing docs/DEVELOPMENT.md
   assert_path_missing src/main/java/com/example
   assert_path_missing src/main/kotlin/com/example
   assert_path_exists "src/main/kotlin/${package_dir}/SmokeMod.kt"
