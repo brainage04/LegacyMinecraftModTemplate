@@ -1,6 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+import java.net.URLClassLoader
+import java.util.zip.ZipFile
+
+import org.gradle.api.tasks.bundling.AbstractArchiveTask
+
 plugins {
     idea
     java
@@ -8,6 +13,7 @@ plugins {
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.gradleup.shadow") version "9.6.1"
     kotlin("jvm") version "2.3.10"
+    id("com.diffplug.spotless") version "8.9.0"
 }
 
 //Constants:
@@ -20,13 +26,24 @@ val version: String by project
 val mcVersion: String by project
 val username: String by project
 
+base {
+    archivesName.set(modid)
+}
+
 // Toolchains:
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
-sourceSets.main {
-    java.srcDir(layout.projectDirectory.dir("src/main/kotlin"))
+// Formatting, the same Java settings as MinecraftModConventions' java-quality-conventions:
+spotless {
+    java {
+        target("src/**/*.java")
+        googleJavaFormat("1.36.1").aosp()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 // Dependencies:
@@ -76,7 +93,7 @@ dependencies {
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
 
-    shadowModImpl("org.notenoughupdates.moulconfig:legacy:3.0.0-beta.3")
+    shadowModImpl("org.notenoughupdates.moulconfig:legacy:4.8.0")
 
     shadowImpl(libs.libautoupdate)
     shadowImpl("org.jetbrains.kotlin:kotlin-reflect:2.3.10")
@@ -90,7 +107,7 @@ loom {
             property("mixin.debug", "true")
             property("asmhelper.verbose", "true")
             programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
-            programArgs("--tweakClass", "io.github.moulberry.moulconfig.tweaker.DevelopmentResourceTweaker")
+            programArgs("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
         }
     }
     forge {
@@ -117,7 +134,6 @@ tasks.withType(JavaCompile::class) {
 }
 
 tasks.withType(Jar::class) {
-    archiveBaseName.set(modid)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.attributes.run {
         this["FMLCorePluginContainsFMLMod"] = "true"
@@ -157,14 +173,68 @@ tasks.shadowJar {
     configurations = listOf(shadowImpl, shadowModImpl)
     exclude("META-INF/versions/**")
 
+    // Relocation renames the classes named in META-INF/services, so those files have to be regenerated;
+    // without this ServiceLoader still looks for the unrelocated name and finds nothing.
+    mergeServiceFiles()
+
     // If you want to include other dependencies and shadow them, you can relocate them in here
-    relocate("io.github.moulberry.moulconfig", "$baseGroup.deps.moulconfig")
+    relocate("io.github.notenoughupdates.moulconfig", "$baseGroup.deps.moulconfig")
     relocate("moe.nea.libautoupdate", "$baseGroup.deps.libautoupdate")
 }
 
 tasks.jar {
     archiveClassifier.set("nodeps")
     destinationDirectory.set(layout.buildDirectory.dir("badjars"))
+}
+
+// MoulConfig finds its Minecraft adapter with ServiceLoader (IMinecraft.java:135 in 4.8.0), so relocating it
+// also renames the interface the service file is keyed by. Check the jar users get, because a missed service
+// file only shows up as a NoSuchElementException at the first config GUI call.
+val moulConfigPackage = "$baseGroup.deps.moulconfig"
+// Loom's remapJar is a gradle.jvm.tasks.Jar (a Zip), not a bundling.Jar, so only their common base carries archiveFile.
+val moulConfigJar = tasks.named("remapJar").map { it as AbstractArchiveTask }
+
+val verifyMoulConfigService by tasks.registering {
+    group = "verification"
+    description = "Checks the built jar registers and loads MoulConfig's Minecraft adapter after relocation."
+    dependsOn(moulConfigJar)
+    val releasedJar = moulConfigJar
+    val serviceFile = "META-INF/services/$moulConfigPackage.common.IMinecraft"
+    val originalServiceFile = "META-INF/services/io.github.notenoughupdates.moulconfig.common.IMinecraft"
+    val adapter = "$moulConfigPackage.internal.ForgeMinecraft"
+    doLast {
+        val jarFile = releasedJar.get().archiveFile.get().asFile
+        ZipFile(jarFile).use { jar ->
+            check(jar.getEntry(originalServiceFile) == null) {
+                "${jarFile.name} still has $originalServiceFile, which names a class relocation removed; add mergeServiceFiles() to tasks.shadowJar"
+            }
+            val entry = jar.getEntry(serviceFile)
+                ?: throw GradleException("${jarFile.name} has no $serviceFile; add mergeServiceFiles() to tasks.shadowJar")
+            val providers = jar.getInputStream(entry).bufferedReader().use { it.readLines() }.filter(String::isNotBlank)
+            check(providers == listOf(adapter)) {
+                "$serviceFile names $providers instead of [$adapter]"
+            }
+        }
+        val thread = Thread.currentThread()
+        val previousLoader = thread.contextClassLoader
+        URLClassLoader(arrayOf(jarFile.toURI().toURL())).use { loader ->
+            thread.contextClassLoader = loader
+            try {
+                val instance = Class.forName("$moulConfigPackage.common.IMinecraft", true, loader)
+                    .getField("INSTANCE")
+                    .get(null)
+                check(instance.javaClass.name == adapter) { "IMinecraft.INSTANCE is ${instance.javaClass.name}, not $adapter" }
+            } catch (e: Throwable) {
+                throw GradleException("$moulConfigPackage.common.IMinecraft.INSTANCE does not load from ${jarFile.name}", e)
+            } finally {
+                thread.contextClassLoader = previousLoader
+            }
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn(verifyMoulConfigService)
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)

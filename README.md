@@ -9,7 +9,7 @@ Create a repository with GitHub's **Use this template** button. The `Initialize 
 For local initialization:
 
 ```shell
-./make-my-own.sh <new-package-name> <project-class-name> <modid> <owner>
+./init.sh <new-package-name> <project-class-name> <modid> <owner>
 ```
 
 The initialization script rewrites the package and metadata, moves Java and Kotlin sources, renames the main class and Mixin configuration, and removes its one-shot scaffolding.
