@@ -3,10 +3,11 @@
 set -euo pipefail
 
 print_help() {
-  printf 'Usage: %s [--side=both|server|client] <new package name> <project class name> <modid> <owner>\n' "$0"
+  printf 'Usage: %s [--side=both|server|client] [--skip-format] <new package name> <project class name> <modid> <owner>\n' "$0"
 }
 
 side="both"
+format_sources="true"
 positionals=()
 
 while [ "$#" -gt 0 ]; do
@@ -22,6 +23,10 @@ while [ "$#" -gt 0 ]; do
       fi
       side="$2"
       shift 2
+      ;;
+    --skip-format)
+      format_sources="false"
+      shift
       ;;
     -h | --help)
       print_help
@@ -216,5 +221,12 @@ rm -f "$base/.github/scripts/smoke_template_generation.sh"
 rmdir "$base/.github/scripts" 2>/dev/null || true
 rm -f "$base/docs/DEVELOPMENT.md"
 rm -f "$(readlink -f "$0")"
+
+# Renaming changes line lengths, so google-java-format can wrap the renamed sources differently,
+# and spotlessCheck fails the generated mod's build on any unformatted line.
+if [ "$format_sources" = "true" ]; then
+  printf 'Formatting the renamed sources with Spotless\n'
+  (cd "$base" && ./gradlew --no-daemon --quiet spotlessApply)
+fi
 
 printf 'Initialization complete.\n'
