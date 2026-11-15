@@ -3,10 +3,10 @@
 ## Initialising
 
 ```shell
-./init.sh [--side=both|server|client] <new-package-name> <project-class-name> <modid> <owner>
+./init.sh [--side=both|server|client] [--skip-format] <new-package-name> <project-class-name> <modid> <owner>
 ```
 
-The initialization script rewrites the package and metadata, moves Java and Kotlin sources, renames the main class and Mixin configuration, and removes its one-shot scaffolding.
+The initialization script rewrites the package and metadata, moves Java and Kotlin sources, renames the main class and Mixin configuration, and removes its one-shot scaffolding. At the end it runs `./gradlew spotlessApply`, because a rename changes line lengths and `spotlessCheck` fails the generated mod's build on any unformatted line; `--skip-format` leaves that step out.
 
 `--side` (default `both`) decides what the generated mod keeps:
 

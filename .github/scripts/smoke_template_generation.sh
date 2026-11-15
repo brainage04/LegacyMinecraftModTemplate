@@ -60,7 +60,11 @@ smoke_side() {
   (
     cd "$target"
 
-    ./init.sh --side="$side" "com.github.smokeowner.${mod_id}" "SmokeMod${side}" "$mod_id" SmokeOwner
+    init_args=(--side="$side")
+    if [ "${TEMPLATE_SMOKE_SKIP_BUILD:-false}" = "true" ]; then
+      init_args+=(--skip-format)
+    fi
+    ./init.sh "${init_args[@]}" "com.github.smokeowner.${mod_id}" "SmokeMod${side}" "$mod_id" SmokeOwner
 
     assert_path_missing init.sh
     # init.sh keeps the workflow under GitHub Actions, because a push made with the

@@ -10,7 +10,7 @@ See above.
 
 Create a repository with GitHub's **Use this template** button. The `Initialize Template Repo` workflow derives a Java-safe package, project class, and mod id from the new repository name.
 
-For local initialization, run `./init.sh [--side=both|server|client] <new-package-name> <project-class-name> <modid> <owner>` (see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)). `--side` drops the half the mod does not need: `client` removes the server mixin and the access transformer, `server` removes the client sources and MoulConfig.
+For local initialization, run `./init.sh [--side=both|server|client] [--skip-format] <new-package-name> <project-class-name> <modid> <owner>` (see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)). `--side` drops the half the mod does not need: `client` removes the server mixin and the access transformer, `server` removes the client sources and MoulConfig.
 
 ## Commands
 
