@@ -3,19 +3,61 @@
 set -euo pipefail
 
 print_help() {
-  printf 'Usage: %s <new package name> <project class name> <modid> <owner>\n' "$0"
+  printf 'Usage: %s [--side=both|server|client] <new package name> <project class name> <modid> <owner>\n' "$0"
 }
 
-if [ "$#" -ne 4 ]; then
+side="both"
+positionals=()
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --side=*)
+      side="${1#*=}"
+      shift
+      ;;
+    --side)
+      if [ "$#" -lt 2 ]; then
+        print_help >&2
+        exit 64
+      fi
+      side="$2"
+      shift 2
+      ;;
+    -h | --help)
+      print_help
+      exit 0
+      ;;
+    --*)
+      printf 'Unknown option: %s\n' "$1" >&2
+      print_help >&2
+      exit 64
+      ;;
+    *)
+      positionals+=("$1")
+      shift
+      ;;
+  esac
+done
+
+if [ "${#positionals[@]}" -ne 4 ]; then
   print_help >&2
   exit 64
 fi
 
+case "$side" in
+  both | server | client) ;;
+  *)
+    printf 'Invalid side: %s\n' "$side" >&2
+    print_help >&2
+    exit 64
+    ;;
+esac
+
 base=$(dirname "$(readlink -f "$0")")
-package_name="$1"
-project_name="$2"
-modid="$3"
-owner="$4"
+package_name="${positionals[0]}"
+project_name="${positionals[1]}"
+modid="${positionals[2]}"
+owner="${positionals[3]}"
 
 if [[ ! "$package_name" =~ ^[a-z_][a-z0-9_]*(\.[a-z_][a-z0-9_]*)+$ ]]; then
   printf 'Invalid Java package: %s\n' "$package_name" >&2
@@ -41,6 +83,7 @@ printf 'Setting package name to %s\n' "$package_name"
 printf 'Setting project name to %s\n' "$project_name"
 printf 'Setting mod id to %s\n' "$modid"
 printf 'Setting owner to %s\n' "$owner"
+printf 'Setting side to %s\n' "$side"
 
 find "$base/src/main" -type f -exec sed -i \
   -e "s|com\.example|$package_name|g" \
@@ -51,7 +94,8 @@ sed -i \
   -e "s|com\.example|$package_name|g" \
   -e "s|examplemod|$modid|g" \
   -e "s|ExampleMod|$project_name|g" \
-  -e "s|brainage04|$owner|g" "$base/gradle.properties"
+  -e "s|brainage04|$owner|g" \
+  -e "s|^modSide = .*|modSide = $side|" "$base/gradle.properties"
 sed -i "s|examplemod|$project_name|g" "$base/settings.gradle.kts"
 
 move_package_tree() {
@@ -73,6 +117,80 @@ if [ -f "$base/src/main/java/$package_dir/config/ExampleModConfig.java" ]; then
     "$base/src/main/java/$package_dir/config/${project_name}Config.java"
 fi
 mv "$base/src/main/resources/mixins.examplemod.json" "$base/src/main/resources/mixins.$modid.json"
+
+java_dir="$base/src/main/java/$package_dir"
+kotlin_dir="$base/src/main/kotlin/$package_dir"
+
+case "$side" in
+  both) ;;
+  client)
+    # A client-only mod never runs a dedicated server, so the @Mod annotation says so and the
+    # build drops the server run configuration (modSide in gradle.properties).
+    sed -i "s|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true)|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true, clientSideOnly = true)|" \
+      "$kotlin_dir/${project_name}.kt"
+
+    # The server mixin and the access transformer exist to show both on a dedicated server.
+    rm -f "$java_dir/mixin/MixinMinecraftServer.java" "$base/src/main/resources/accesstransformer.cfg"
+    sed -i \
+      -e '/If you don.t want access transformers, remove this line and accesstransformer.cfg/d' \
+      -e '/^        accessTransformer(transformerFile)$/d' \
+      -e '/If you don.t want access transformers, remove this line$/d' \
+      -e '/^        this\["FMLAT"\] = /d' \
+      -e '/^val transformerFile = /d' \
+      "$base/build.gradle.kts"
+    sed -i 's|    rename("accesstransformer.cfg", "META-INF/${modid}_at.cfg")||' "$base/build.gradle.kts"
+    ;;
+  server)
+    # A server-only mod has no client: no keybinds, no config GUI, no client commands, no client mixin.
+    sed -i "s|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true)|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true, serverSideOnly = true)|" \
+      "$kotlin_dir/${project_name}.kt"
+    rm -rf "$java_dir/mixin/client" "$java_dir/config" "$java_dir/keybinds" "$java_dir/commands" \
+      "$java_dir/utils" "$kotlin_dir/config" "$kotlin_dir/keybinds" "$kotlin_dir/commands" \
+      "$kotlin_dir/utils" "$kotlin_dir/errors"
+    rm -f "$kotlin_dir/ClientSetup.kt"
+
+    # MoulConfig draws a client config screen, so a server-only mod does not ship it.
+    sed -i \
+      -e '/shadowModImpl("org.notenoughupdates.moulconfig/d' \
+      -e '/moulconfig.tweaker.DevelopmentResourceTweaker/d' \
+      -e '/relocate("io.github.notenoughupdates.moulconfig"/d' \
+      "$base/build.gradle.kts"
+    perl -0pi -e 's|\n// MoulConfig finds its Minecraft adapter.*?\ntasks\.named\("check"\) \{\n    dependsOn\(verifyMoulConfigService\)\n\}\n||s' \
+      "$base/build.gradle.kts"
+
+    cat >"$kotlin_dir/${project_name}.kt" <<EOF
+package $package_name
+
+import net.minecraft.command.CommandBase
+import net.minecraft.command.ICommandSender
+import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent
+import org.apache.logging.log4j.LogManager
+
+@Mod(modid = ${project_name}.MOD_ID, useMetadata = true, serverSideOnly = true)
+class ${project_name} {
+    @Mod.EventHandler
+    fun serverStarting(event: FMLServerStartingEvent) {
+        event.registerServerCommand(object : CommandBase() {
+            override fun getCommandName() = MOD_ID
+
+            override fun getCommandUsage(sender: ICommandSender) = "/\$MOD_ID"
+
+            override fun processCommand(sender: ICommandSender, args: Array<String>) {
+                LOGGER.info("{} ran on the server", MOD_ID)
+            }
+        })
+    }
+
+    companion object {
+        const val MOD_ID = "$modid"
+        const val MOD_NAME = "$project_name"
+        val LOGGER = LogManager.getLogger(MOD_ID)
+    }
+}
+EOF
+    ;;
+esac
 
 cat >"$base/README.md" <<EOF
 # $project_name

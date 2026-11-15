@@ -41,3 +41,6 @@ replay_*.log
 *.jfr
 
 .env
+
+# nomad-heavy job lock
+.gametest.lock

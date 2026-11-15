@@ -1,11 +1,8 @@
 {
-  "package": "${mixinGroup}",
+  "package": "${basePackage}.mixin",
+  "plugin": "${basePackage}.init.AutoDiscoveryMixinPlugin",
   "refmap": "mixins.${modid}.refmap.json",
   "minVersion": "0.7",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
-  "client": [
-    "MixinGuiMainMenu"
-  ]
+  "__comment": "Mixin classes are found by AutoDiscoveryMixinPlugin, so none are listed here. Classes in the mixin.client package load only on the physical client."
 }
