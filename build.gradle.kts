@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.SystemUtils
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -19,12 +20,13 @@ plugins {
 //Constants:
 
 val baseGroup: String by project
-val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
 val modname: String by project
 val version: String by project
 val mcVersion: String by project
 val username: String by project
+val modSide: String by project
+val transformerFile = file("src/main/resources/accesstransformer.cfg")
 
 base {
     archivesName.set(modid)
@@ -107,12 +109,26 @@ loom {
             property("mixin.debug", "true")
             programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
             programArgs("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
+            if (SystemUtils.IS_OS_MAC_OSX) {
+                // Loom adds this for the client run; on macOS it crashes the game at launch.
+                vmArgs.remove("-XstartOnFirstThread")
+            }
+        }
+        named("server") {
+            // Without the tweak class a development server runs with no mixins at all.
+            programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
+        }
+        if (modSide == "client") {
+            // A client-only mod has no server to run.
+            remove(getByName("server"))
         }
     }
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
         // If you don't want mixins, remove this lines
         mixinConfig("mixins.$modid.json")
+        // If you don't want access transformers, remove this line and accesstransformer.cfg
+        accessTransformer(transformerFile)
     }
     // If you don't want mixins, remove these lines
     @Suppress("UnstableApiUsage")
@@ -141,11 +157,14 @@ tasks.withType(org.gradle.jvm.tasks.Jar::class) {
         // If you don't want mixins, remove these lines
         this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
         this["MixinConfigs"] = "mixins.$modid.json"
+
+        // If you don't want access transformers, remove this line
+        this["FMLAT"] = "${modid}_at.cfg"
     }
 }
 
 tasks.processResources {
-    inputs.property("mixinGroup", mixinGroup)
+    inputs.property("basePackage", baseGroup)
     inputs.property("modid", modid)
     inputs.property("modname", modname)
     inputs.property("version", project.version)
@@ -156,7 +175,7 @@ tasks.processResources {
         expand(inputs.properties)
     }
 
-    rename("(.+_at.cfg)", "META-INF/$1")
+    rename("accesstransformer.cfg", "META-INF/${modid}_at.cfg")
 }
 
 
