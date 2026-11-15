@@ -1,6 +1,17 @@
 name: Initialize Template Repo
 on:
-  - push
+  push:
+  workflow_dispatch:
+    inputs:
+      side:
+        description: Mod side to generate
+        required: true
+        type: choice
+        default: both
+        options:
+          - both
+          - server
+          - client
 
 permissions:
   contents: write
@@ -15,6 +26,9 @@ jobs:
         uses: actions/checkout@v5
       - name: Initialize repository
         shell: bash
+        env:
+          # A push (a repository made with "Use this template") has no inputs, so it gets both.
+          INIT_SIDE: ${{ inputs.side || 'both' }}
         run: |
           set -euo pipefail
           if [ ! -f init.sh ]; then
@@ -35,8 +49,9 @@ jobs:
 
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
-          ./init.sh "$package_name" "$project_name" "$modid" "$repository_owner"
+          ./init.sh --side="$INIT_SIDE" "$package_name" "$project_name" "$modid" "$repository_owner"
           git add --all
           git commit -m "Initialize template repository" \
-            -m "Set package name to ${package_name}, project name to ${project_name}, and mod id to ${modid}."
+            -m "Set package name to ${package_name}, project name to ${project_name}, and mod id to ${modid}." \
+            -m "Set mod side to ${INIT_SIDE}."
           git push origin "HEAD:${GITHUB_REF_NAME}"

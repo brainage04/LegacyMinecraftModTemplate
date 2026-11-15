@@ -138,6 +138,8 @@ case "$side" in
       -e '/^        this\["FMLAT"\] = /d' \
       -e '/^val transformerFile = /d' \
       "$base/build.gradle.kts"
+    # ${modid} is Gradle's template expression in build.gradle.kts, not a shell variable.
+    # shellcheck disable=SC2016
     sed -i 's|    rename("accesstransformer.cfg", "META-INF/${modid}_at.cfg")||' "$base/build.gradle.kts"
     ;;
   server)
