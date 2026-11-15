@@ -1,8 +1,7 @@
 package com.example.init;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -49,25 +48,7 @@ public class AutoDiscoveryMixinPlugin implements IMixinConfigPlugin {
         }
 
         List<String> found = new ArrayList<>();
-        Path classRoot;
-        try {
-            classRoot =
-                    Paths.get(
-                            getBaseUrlForClassUrl(
-                                            getClass()
-                                                    .getProtectionDomain()
-                                                    .getCodeSource()
-                                                    .getLocation())
-                                    .toURI());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (Files.isDirectory(classRoot)) {
-            walkDirectory(classRoot, found);
-        } else {
-            walkJar(classRoot, found);
-        }
+        collect(found);
 
         boolean client =
                 MixinEnvironment.getCurrentEnvironment().getSide() == MixinEnvironment.Side.CLIENT;
@@ -88,53 +69,56 @@ public class AutoDiscoveryMixinPlugin implements IMixinConfigPlugin {
     }
 
     /**
-     * The class root that {@code classUrl} was loaded from: the jar file, or the directory holding
-     * the class files during a development run.
+     * Adds every class of the mixin package to {@code found}.
+     *
+     * <p>The search starts from this class's own resource, not from its code source: a loader may
+     * report a code source that is not where the classes are, and it need not serve directory
+     * resources at all. This class sits in the same class root as the mixins, so its resource URL
+     * gives that root in a development run (a directory) and in a built jar alike.
      */
-    private URL getBaseUrlForClassUrl(URL classUrl) {
-        String string = classUrl.toString();
-        if ("jar".equals(classUrl.getProtocol())) {
-            try {
-                return new URL(string.substring(4).split("!")[0]);
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
+    private void collect(List<String> found) {
+        String ownResource = getClass().getSimpleName() + ".class";
+        URL own = getClass().getResource(ownResource);
+        if (own == null) {
+            throw new IllegalStateException("Cannot locate " + ownResource + " to find the mixins");
         }
-        if (string.endsWith(".class")) {
-            try {
-                return new URL(
-                        string.replace("\\", "/")
-                                .replace(
-                                        getClass().getCanonicalName().replace(".", "/") + ".class",
-                                        ""));
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return classUrl;
-    }
 
-    private void walkDirectory(Path classRoot, List<String> found) {
-        Path mixinRoot = classRoot.resolve(mixinPackage.replace(".", "/"));
+        String ownPath = getClass().getName().replace(".", "/") + ".class";
+        String url = own.toString();
+        if (!url.endsWith(ownPath)) {
+            throw new IllegalStateException("Unexpected location for " + ownResource + ": " + url);
+        }
+        String classRoot = url.substring(0, url.length() - ownPath.length());
+
+        if (classRoot.startsWith("jar:")) {
+            String jarPath = classRoot.substring(4).split("!")[0];
+            try (ZipInputStream zis =
+                    new ZipInputStream(Files.newInputStream(Paths.get(URI.create(jarPath))))) {
+                ZipEntry next;
+                while ((next = zis.getNextEntry()) != null) {
+                    addMixin(next.getName(), found);
+                    zis.closeEntry();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
+        Path directory;
+        try {
+            directory = Paths.get(URI.create(classRoot));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Cannot read the class root " + classRoot, e);
+        }
+        Path mixinRoot = directory.resolve(mixinPackage.replace(".", "/"));
         if (!Files.isDirectory(mixinRoot)) {
             return;
         }
         try (Stream<Path> classes = Files.walk(mixinRoot)) {
             classes.filter(Files::isRegularFile)
-                    .map(it -> classRoot.relativize(it).toString())
+                    .map(it -> directory.relativize(it).toString())
                     .forEach(it -> addMixin(it, found));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void walkJar(Path jar, List<String> found) {
-        try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(jar))) {
-            ZipEntry next;
-            while ((next = zis.getNextEntry()) != null) {
-                addMixin(next.getName(), found);
-                zis.closeEntry();
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
