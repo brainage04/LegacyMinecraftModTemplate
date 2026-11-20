@@ -24,6 +24,7 @@ val modname: String by project
 val version: String by project
 val mcVersion: String by project
 val username: String by project
+val transformerFile = file("src/main/resources/accesstransformer.cfg")
 
 base {
     archivesName.set(modid)
@@ -112,6 +113,8 @@ loom {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
         // If you don't want mixins, remove this lines
         mixinConfig("mixins.$modid.json")
+        // If you don't want access transformers, remove this line and accesstransformer.cfg
+        accessTransformer(transformerFile)
     }
     // If you don't want mixins, remove these lines
     @Suppress("UnstableApiUsage")
@@ -140,6 +143,9 @@ tasks.withType(org.gradle.jvm.tasks.Jar::class) {
         // If you don't want mixins, remove these lines
         this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
         this["MixinConfigs"] = "mixins.$modid.json"
+
+        // If you don't want access transformers, remove this line
+        this["FMLAT"] = "${modid}_at.cfg"
     }
 }
 
@@ -155,7 +161,7 @@ tasks.processResources {
         expand(inputs.properties)
     }
 
-    rename("(.+_at.cfg)", "META-INF/$1")
+    rename("accesstransformer.cfg", "META-INF/${modid}_at.cfg")
 }
 
 
