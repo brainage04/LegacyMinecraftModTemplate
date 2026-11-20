@@ -1,3 +1,4 @@
+import org.apache.commons.lang3.SystemUtils
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -24,6 +25,7 @@ val modname: String by project
 val version: String by project
 val mcVersion: String by project
 val username: String by project
+val modSide: String by project
 val transformerFile = file("src/main/resources/accesstransformer.cfg")
 
 base {
@@ -107,6 +109,20 @@ loom {
             property("mixin.debug", "true")
             programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
             programArgs("--tweakClass", "io.github.notenoughupdates.moulconfig.tweaker.DevelopmentResourceTweaker")
+            if (SystemUtils.IS_OS_MAC_OSX) {
+                // Loom adds -XstartOnFirstThread to a client run on macOS when the game uses LWJGL 3
+                // (RunConfig.runConfig, architectury-loom 1.15.50). 1.8.9 uses LWJGL 2, so it is not
+                // added today; the argument crashes the game at launch on macOS (upstream f3ef0f1).
+                vmArgs.remove("-XstartOnFirstThread")
+            }
+        }
+        named("server") {
+            // Without the tweak class a development server runs with no mixins at all.
+            programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
+        }
+        if (modSide == "client") {
+            // A client-only mod has no server to run.
+            remove(getByName("server"))
         }
     }
     forge {
