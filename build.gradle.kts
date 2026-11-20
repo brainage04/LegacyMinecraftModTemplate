@@ -19,7 +19,6 @@ plugins {
 //Constants:
 
 val baseGroup: String by project
-val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
 val modname: String by project
 val version: String by project
@@ -145,7 +144,7 @@ tasks.withType(org.gradle.jvm.tasks.Jar::class) {
 }
 
 tasks.processResources {
-    inputs.property("mixinGroup", mixinGroup)
+    inputs.property("basePackage", baseGroup)
     inputs.property("modid", modid)
     inputs.property("modname", modname)
     inputs.property("version", project.version)
