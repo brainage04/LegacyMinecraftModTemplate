@@ -133,6 +133,11 @@ case "$side" in
     # build drops the server run configuration (modSide in gradle.properties).
     sed -i "s|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true)|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true, clientSideOnly = true)|" \
       "$kotlin_dir/${project_name}.kt"
+    if ! grep -q 'clientSideOnly = true' "$kotlin_dir/${project_name}.kt"; then
+      printf 'Could not mark the mod client-only: the @Mod line in %s is not the one this script rewrites.\nThe tree is already renamed, so reset it before trying again.\n' \
+        "$kotlin_dir/${project_name}.kt" >&2
+      exit 1
+    fi
 
     # The server mixin and the access transformer exist to show both on a dedicated server.
     rm -f "$java_dir/mixin/MixinMinecraftServer.java" "$base/src/main/resources/accesstransformer.cfg"
@@ -151,6 +156,11 @@ case "$side" in
     # A server-only mod has no client: no keybinds, no config GUI, no client commands, no client mixin.
     sed -i "s|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true)|@Mod(modid = ${project_name}.MOD_ID, useMetadata = true, serverSideOnly = true)|" \
       "$kotlin_dir/${project_name}.kt"
+    if ! grep -q 'serverSideOnly = true' "$kotlin_dir/${project_name}.kt"; then
+      printf 'Could not mark the mod server-only: the @Mod line in %s is not the one this script rewrites.\nThe tree is already renamed, so reset it before trying again.\n' \
+        "$kotlin_dir/${project_name}.kt" >&2
+      exit 1
+    fi
     rm -rf "$java_dir/mixin/client" "$java_dir/config" "$java_dir/keybinds" "$java_dir/commands" \
       "$java_dir/utils" "$kotlin_dir/config" "$kotlin_dir/keybinds" "$kotlin_dir/commands" \
       "$kotlin_dir/utils" "$kotlin_dir/errors"
