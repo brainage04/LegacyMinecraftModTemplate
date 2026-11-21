@@ -83,8 +83,11 @@ smoke_side() {
     assert_path_exists "src/main/resources/mixins.${mod_id}.json"
     assert_match '"plugin": "\$\{basePackage\}\.init\.AutoDiscoveryMixinPlugin"' "src/main/resources/mixins.${mod_id}.json"
     assert_no_match 'com\.example|examplemod|ExampleMod' src gradle.properties settings.gradle.kts README.md
-    # Loom adds -XstartOnFirstThread to the client run on macOS, where it crashes the game.
-    assert_match 'IS_OS_MAC_OSX' build.gradle.kts
+    # Loom adds -XstartOnFirstThread to a macOS client run that uses LWJGL 3 (RunConfig.runConfig,
+    # architectury-loom 1.15.50); 1.8.9 uses LWJGL 2, so the removal is a guard for a future version.
+    # It has to survive init.sh on every side. The behaviour itself needs a macOS client and is not
+    # tested here.
+    assert_match 'vmArgs\.remove\("-XstartOnFirstThread"\)' build.gradle.kts
     grep -qx "baseGroup = com.github.smokeowner.${mod_id}" gradle.properties
     grep -qx "modid = ${mod_id}" gradle.properties
     grep -qx "modSide = ${side}" gradle.properties

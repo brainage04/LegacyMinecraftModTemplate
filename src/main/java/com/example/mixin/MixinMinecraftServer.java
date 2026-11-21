@@ -9,20 +9,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * A mixin that applies on both sides, so a dedicated server has one too.
  *
- * <p>It reads {@code playersOnline}, which is private in vanilla and made public by {@code
+ * <p>It reads {@code tickCounter}, which is private in vanilla and made public by {@code
  * accesstransformer.cfg}; without that entry this class does not compile.
+ *
+ * <p>The constructor is named with its descriptor because 1.8.9 declares two of them and a bare
+ * {@code <init>} selector matches both; the descriptor picks the one {@code DedicatedServer} calls.
  */
 @Mixin(MinecraftServer.class)
 public class MixinMinecraftServer {
-    private boolean examplemod$logged;
-
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>(Ljava/io/File;Ljava/net/Proxy;Ljava/io/File;)V", at = @At("RETURN"))
     private void examplemod$logConstruction(CallbackInfo ci) {
-        if (examplemod$logged) {
-            return;
-        }
-        examplemod$logged = true;
         MinecraftServer server = (MinecraftServer) (Object) this;
-        System.out.println("Server mixin applied; players online: " + server.playersOnline.size());
+        System.out.println("Server mixin applied; tick counter " + server.tickCounter);
     }
 }

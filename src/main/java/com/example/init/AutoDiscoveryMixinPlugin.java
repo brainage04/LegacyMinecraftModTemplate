@@ -16,6 +16,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.lib.AnnotationVisitor;
 import org.spongepowered.asm.lib.ClassReader;
 import org.spongepowered.asm.lib.ClassVisitor;
@@ -29,15 +31,16 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
  * Registers every class in the mixin package as a mixin, so the mixin configuration lists none by
  * hand.
  *
- * <p>Mixin calls {@link #getMixins()} once per config, after the environment's side is known
- * (MixinConfig.postInitialise, mixin 0.7.11). Classes in the {@code client} sub-package are
- * returned only when that side is {@link MixinEnvironment.Side#CLIENT}, so a dedicated server never
- * loads them: a client mixin names client-only classes, and loading it there fails the server at
- * startup.
+ * <p>Mixin calls {@link #getMixins()} once per config (MixinConfig.postInitialise, mixin 0.7.11).
+ * Classes in the {@code client} sub-package are returned only when the environment's side is {@link
+ * MixinEnvironment.Side#CLIENT}, so a dedicated server never loads them: a client mixin names
+ * client-only classes, and loading it there fails the server at startup. The side comes from the
+ * launch's tweak class, or from Forge's launch handler when no tweak class matches.
  *
  * <p>Adapted from lineargraph/Forge1.8.9Template 09cd2809.
  */
 public class AutoDiscoveryMixinPlugin implements IMixinConfigPlugin {
+    private static final Logger LOGGER = LogManager.getLogger("AutoDiscoveryMixinPlugin");
     private static final String CLIENT_PACKAGE = "client.";
     private static final String MIXIN_DESCRIPTOR = "Lorg/spongepowered/asm/mixin/Mixin;";
 
@@ -68,11 +71,10 @@ public class AutoDiscoveryMixinPlugin implements IMixinConfigPlugin {
         }
 
         mixins = Collections.unmodifiableList(selected);
-        System.out.println(
-                "[AutoDiscoveryMixinPlugin] side "
-                        + MixinEnvironment.getCurrentEnvironment().getSide()
-                        + ", mixins "
-                        + mixins);
+        LOGGER.info(
+                "[AutoDiscoveryMixinPlugin] side {}, mixins {}",
+                MixinEnvironment.getCurrentEnvironment().getSide(),
+                mixins);
         return mixins;
     }
 
@@ -100,15 +102,26 @@ public class AutoDiscoveryMixinPlugin implements IMixinConfigPlugin {
 
         if (classRoot.startsWith("jar:")) {
             String jarPath = classRoot.substring(4).split("!")[0];
+            String mixinRoot = mixinPackage.replace(".", "/") + "/";
+            boolean packagePresent = false;
             try (ZipInputStream zis =
                     new ZipInputStream(Files.newInputStream(Paths.get(URI.create(jarPath))))) {
                 ZipEntry next;
                 while ((next = zis.getNextEntry()) != null) {
-                    addMixin(next.getName(), readAll(zis), found);
+                    // Read only the mixin package's classes: a shadowed dependency puts tens of
+                    // megabytes of other classes in the same jar.
+                    if (next.getName().startsWith(mixinRoot)) {
+                        packagePresent = true;
+                        addMixin(next.getName(), readAll(zis), found);
+                    }
                     zis.closeEntry();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+            if (!packagePresent) {
+                throw new IllegalStateException(
+                        "Cannot find the mixin package " + mixinPackage + " inside " + jarPath);
             }
             return;
         }
@@ -119,11 +132,12 @@ public class AutoDiscoveryMixinPlugin implements IMixinConfigPlugin {
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Cannot read the class root " + classRoot, e);
         }
-        Path mixinRoot = directory.resolve(mixinPackage.replace(".", "/"));
-        if (!Files.isDirectory(mixinRoot)) {
-            return;
+        Path mixinDirectory = directory.resolve(mixinPackage.replace(".", "/"));
+        if (!Files.isDirectory(mixinDirectory)) {
+            throw new IllegalStateException(
+                    "Cannot find the mixin package " + mixinPackage + " under " + directory);
         }
-        try (Stream<Path> classes = Files.walk(mixinRoot)) {
+        try (Stream<Path> classes = Files.walk(mixinDirectory)) {
             classes.filter(Files::isRegularFile)
                     .forEach(
                             it -> {

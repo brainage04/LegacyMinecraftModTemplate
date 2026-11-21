@@ -16,11 +16,11 @@ The initialization script rewrites the package and metadata, moves Java and Kotl
 
 ## Mixins
 
-Mixin classes are not listed in `mixins.<modid>.json`. `AutoDiscoveryMixinPlugin` returns every class in the `mixin` package from `getMixins()`, which Mixin calls once per config after it knows the side. Classes in `mixin.client` are returned only on a physical client, so a dedicated server never loads them.
+Mixin classes are not listed in `mixins.<modid>.json`. `AutoDiscoveryMixinPlugin` returns every class in the `mixin` package from `getMixins()`, which Mixin calls once per config. Classes in `mixin.client` are returned only on a physical client, so a dedicated server never loads them.
 
 ## Access transformers
 
-`src/main/resources/accesstransformer.cfg` widens members of the game jar. The build applies it to the Minecraft jar it compiles against, so an entry that names nothing fails the build, and ships it as `META-INF/<modid>_at.cfg` with the `FMLAT` manifest entry. Members use SRG names (`field_`/`func_`), as in Forge's own `forge_at.cfg`.
+`src/main/resources/accesstransformer.cfg` widens members of the game jar. The build applies it to the Minecraft jar it compiles against, so mod code can read a member it widens, and ships it as `META-INF/<modid>_at.cfg` with the `FMLAT` manifest entry. Members use SRG names (`field_`/`func_`), as in Forge's own `forge_at.cfg`. An entry that names nothing is skipped without an error, so the compile error from reading the member is what catches a wrong entry.
 
 ## Building
 
@@ -37,4 +37,4 @@ It writes the mod jar to `build/libs/<modid>-<version>.jar`.
 
 `bash .github/scripts/smoke_template_generation.sh` initialises a copy of the template for each side and builds it.
 
-`./gradlew runServer` starts a development server with the mod's mixins applied; it logs `[AutoDiscoveryMixinPlugin] side SERVER, mixins [...]` and `Server mixin applied`.
+`./gradlew runServer` starts a development server with the mod's mixins applied; it logs `[AutoDiscoveryMixinPlugin] side SERVER, mixins [...]` and `Server mixin applied; tick counter 0`.
